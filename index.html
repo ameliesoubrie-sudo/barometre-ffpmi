@@ -155,9 +155,13 @@ function bandLabel(B,k){
 }
 
 /* Prédicats de parcours */
-const inScope = r => r.q1==="oui_toujours" || r.q1==="oui_cesse";
+const inScopeBase = r => r.q1==="oui_toujours" || r.q1==="oui_cesse";
+/* Hors champ : activité commerciale sans immatriculation artisanale, ou artiste-auteur exclusivement */
+const excluded = r => r.q8==="commercial" || r.q10==="exclusif";
+const inScope = r => inScopeBase(r) && !excluded(r);
 const n26 = r => r.q1==="non_2026";
-const anyPath = r => inScope(r) || n26(r);
+const anyPath = r => inScopeBase(r) || n26(r);          // questions de profil (partie 1)
+const laterPath = r => inScope(r) || n26(r);            // questions de fin (partie 7)
 const isMicro = r => r.q9==="micro_bic" || r.q9==="micro_bnc";
 const isIS = r => r.q9==="is";
 const isSoc = r => ["eurl","sarl","sasu","sas"].includes(r.q7);
@@ -187,15 +191,15 @@ const Q = [
  {id:"q5",s:"s1",type:"single",when:anyPath,label:"À quelle tranche d'âge appartenez-vous ?",opts:[["m25","Moins de 25 ans."],["25_34","25 à 34 ans."],["35_44","35 à 44 ans."],["45_54","45 à 54 ans."],["55_64","55 à 64 ans."],["65p","65 ans ou plus."],["nr","Je préfère ne pas répondre."]]},
  {id:"q6",s:"s1",type:"single",when:anyPath,label:"Vous êtes :",opts:[["f","Une femme."],["h","Un homme."],["autre","Je me décris autrement."],["nr","Je préfère ne pas répondre."]]},
 
- {id:"q7",s:"s2",type:"single",when:inScope,label:"Sous quelle forme exerciez-vous principalement en 2025 ?",help:"Si vous aviez plusieurs structures, répondez pour celle qui portait la plus grande part de votre activité photographique. Les questions sur l'entreprise concerneront cette structure.",
+ {id:"q7",s:"s2",type:"single",when:inScopeBase,label:"Sous quelle forme exerciez-vous principalement en 2025 ?",help:"Si vous aviez plusieurs structures, répondez pour celle qui portait la plus grande part de votre activité photographique. Les questions sur l'entreprise concerneront cette structure.",
   opts:[["ei","Entreprise individuelle, micro-entreprise comprise."],["eurl","EURL."],["sarl","SARL."],["sasu","SASU."],["sas","SAS."],["autre","Autre forme."],["nsp","Je ne sais pas."]]},
- {id:"q7a",s:"s2",type:"text",when:r=>inScope(r)&&r.q7==="autre",label:"Précisez la forme juridique :"},
- {id:"q8",s:"s2",type:"single",when:inScope,label:"Comment l'activité photographique de cette structure était-elle immatriculée en 2025 ?",
+ {id:"q7a",s:"s2",type:"text",when:r=>inScopeBase(r)&&r.q7==="autre",label:"Précisez la forme juridique :"},
+ {id:"q8",s:"s2",type:"single",when:inScopeBase,label:"Comment l'activité photographique de cette structure était-elle immatriculée en 2025 ?",
   opts:[["artisanal","Comme activité artisanale (Registre national des entreprises, ex-Répertoire des métiers, rattachement à la Chambre de métiers et de l'artisanat)."],["commercial","Comme activité commerciale, sans immatriculation artisanale."],["liberal","Comme activité libérale."],["nsp","Je ne sais pas."]]},
+ {id:"q10",s:"s2",type:"single",when:r=>inScopeBase(r)&&r.q8!=="commercial",label:"Exerciez-vous également une activité sous le régime des artistes-auteurs ?",opts:[["non","Non."],["parallele","Oui, en parallèle de mon activité artisanale."],["exclusif","Oui, exclusivement."],["nsp","Je ne sais pas."]]},
  {id:"q9",s:"s2",type:"single",when:inScope,label:"Quel était le régime fiscal de cette structure en 2025 ?",help:"Ces informations figurent sur votre déclaration de revenus ou votre espace URSSAF.",
   opts:[["micro_bic","Micro-entreprise, bénéfices industriels et commerciaux (micro-BIC)."],["micro_bnc","Micro-entreprise, bénéfices non commerciaux (micro-BNC)."],["reel_bic","Régime réel à l'impôt sur le revenu, en BIC."],["reel_bnc","Régime réel à l'impôt sur le revenu, en BNC."],["is","Impôt sur les sociétés."],["autre","Autre."],["nsp","Je ne sais pas."]]},
  {id:"q9c",s:"s2",type:"single",when:inScope,label:"Avez-vous changé de régime fiscal au cours de l'année 2025 ?",opts:[["non","Non."],["oui","Oui."]]},
- {id:"q10",s:"s2",type:"single",when:inScope,label:"Exerciez-vous également une activité sous le régime des artistes-auteurs ?",opts:[["non","Non."],["parallele","Oui, en parallèle de mon activité artisanale."],["exclusif","Oui, exclusivement."],["nsp","Je ne sais pas."]]},
  {id:"q11",s:"s2",type:"single",when:inScope,label:"Combien de personnes dirigeantes ou associées travaillaient effectivement dans cette structure, vous compris ?",opts:[["1","Une."],["2","Deux."],["3","Trois."],["4p","Quatre ou plus."]]},
  {id:"q12",s:"s2",type:"single",when:inScope,label:"Combien de salariés employait-elle en moyenne en 2025, hors dirigeants et hors apprentis ?",opts:[["0","Aucun."],["lt1","Moins d'un équivalent temps plein."],["1_3","De 1 à moins de 3 équivalents temps plein."],["3_5","De 3 à moins de 5."],["5p","5 ou plus."],["nsp","Je ne sais pas."]]},
 
@@ -250,9 +254,9 @@ const Q = [
   opts:[["developpe","J'ai développé mon activité photographique (plus de clients ou de commandes)."],["nouvelle_presta","J'ai lancé une nouvelle prestation ou spécialité."],["investi","J'ai fait un investissement important (matériel, studio, site internet...)."],["embauche","J'ai embauché (salarié, apprenti ou alternant)."],["reduit","J'ai réduit mon activité photographique."],["plus_autre","J'ai commencé ou augmenté une autre activité rémunérée."],["moins_autre","J'ai diminué ou arrêté une autre activité rémunérée."],["ouvert_local","J'ai ouvert ou pris un local professionnel."],["ferme_local","J'ai fermé ou quitté un local professionnel."],["statut","J'ai changé de statut juridique ou de régime fiscal."],["cesse","J'ai cessé mon activité photographique."],["autre","Autre changement important."],["aucun","Aucun de ces changements."]]},
  {id:"q31m",s:"s7",type:"single",when:r=>inScope(r)&&arr(r.q31).some(v=>["reduit","plus_autre","ferme_local","cesse","autre"].includes(v)),label:"Quel est le motif principal de cette réduction ou de ce changement ?",opts:[["eco","Raison économique."],["choix","Choix personnel."],["sante","Santé."],["retraite","Retraite."],["autre","Autre."]]},
  {id:"q31r",s:"s7",type:"single",when:inScope,label:"Depuis le début de 2026, le revenu que vous tirez de votre activité photographique est-il, par rapport à la même période de 2025 :",help:"Une tendance suffit, sans calcul précis.",opts:[["hausse","En hausse."],["stable","Stable."],["baisse","En baisse."],["nsp","Je ne sais pas encore."]]},
- {id:"q32",s:"s7",type:"single",when:anyPath,label:"Pour les douze prochains mois, quelle est votre intention principale ?",opts:[["developper","Développer mon activité photographique."],["maintenir","Maintenir mon activité à un niveau comparable."],["reduire","Réduire mon activité."],["cesser","Cesser mon activité."],["nsp","Je ne sais pas encore."]]},
- {id:"q33",s:"s7",type:"single",when:anyPath,label:"Êtes-vous adhérent d'une organisation professionnelle ?",opts:[["ffpmi","FFPMI."],["autre","Une autre organisation."],["plusieurs_ffpmi","Plusieurs organisations, dont la FFPMI."],["plusieurs_hors","Plusieurs organisations, hors FFPMI."],["aucune","Aucune."],["nr","Je préfère ne pas répondre."]]},
- {id:"q34",s:"s7",type:"textarea",optional:true,when:anyPath,label:"Souhaitez-vous préciser un élément important pour comprendre votre situation ?",help:"Facultatif. Merci de ne pas indiquer votre nom, celui de votre entreprise ou toute information permettant de vous identifier."}
+ {id:"q32",s:"s7",type:"single",when:laterPath,label:"Pour les douze prochains mois, quelle est votre intention principale ?",opts:[["developper","Développer mon activité photographique."],["maintenir","Maintenir mon activité à un niveau comparable."],["reduire","Réduire mon activité."],["cesser","Cesser mon activité."],["nsp","Je ne sais pas encore."]]},
+ {id:"q33",s:"s7",type:"single",when:laterPath,label:"Êtes-vous adhérent d'une organisation professionnelle ?",opts:[["ffpmi","FFPMI."],["autre","Une autre organisation."],["plusieurs_ffpmi","Plusieurs organisations, dont la FFPMI."],["plusieurs_hors","Plusieurs organisations, hors FFPMI."],["aucune","Aucune."],["nr","Je préfère ne pas répondre."]]},
+ {id:"q34",s:"s7",type:"textarea",optional:true,when:laterPath,label:"Souhaitez-vous préciser un élément important pour comprendre votre situation ?",help:"Facultatif. Merci de ne pas indiquer votre nom, celui de votre entreprise ou toute information permettant de vous identifier."}
 ];
 /* Réponses affichées sans point final */
 const noDot = l => String(l).replace(/(?<!\.)\.$/,"");
@@ -521,6 +525,7 @@ function readable(row){
 }
 function renderFeedback(row){
   app.innerHTML = `<section class="end fb"><span class="accent"></span><h2>Merci d'avoir testé le questionnaire</h2>
+    ${excluded(R) ? `<div class="msg warn">Fin du parcours : avec une activité commerciale ou une activité exclusivement d'artiste-auteur, le répondant est hors du champ de l'enquête. Dans la version réelle, le questionnaire s'arrête ici.</div>` : ""}
     <p>${RESTITUTION}</p>
     <p>Vos réponses n'ont pas été enregistrées. Pour finir, quelques questions sur le questionnaire lui-même : vos remarques serviront à l'améliorer avant sa diffusion.</p>
     <form id="fbf">${FBQ.map(q=>`<div class="q"><div class="q-label">${esc(q.label)}</div>${q.type==="single"
@@ -569,10 +574,10 @@ async function submit(){
       await fetch(CONFIG.ENDPOINT, {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"}, body: JSON.stringify(row)});
     }
     try { localStorage.setItem("barometre_ffpmi_2025_envoye","1"); } catch(e){}
-    const outScope = R.q1==="non";
+    const outScope = R.q1==="non" || excluded(R);
     app.innerHTML = `<section class="end"><span class="accent"></span>
       <h2>${outScope ? "Merci pour votre intérêt" : "Merci, vos réponses sont enregistrées"}</h2>
-      <p>${outScope ? "Cette enquête concerne les photographes ayant exercé une activité professionnelle indépendante en 2025. Votre réponse a bien été prise en compte." : "Votre participation contribue à faire connaître la réalité économique de notre profession."}</p>
+      <p>${excluded(R) ? "Cette enquête porte sur les photographes exerçant une activité artisanale. Votre situation n'entre pas dans son champ, mais votre réponse a bien été prise en compte et nous vous remercions de votre participation." : outScope ? "Cette enquête concerne les photographes ayant exercé une activité professionnelle indépendante en 2025. Votre réponse a bien été prise en compte." : "Votre participation contribue à faire connaître la réalité économique de notre profession."}</p>
       <p>${RESTITUTION}</p>
       <p>Vous pouvez partager ce questionnaire avec d'autres photographes, adhérents ou non : plus les réponses seront nombreuses, plus les résultats seront fiables.</p></section>`;
   } catch(e){
