@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Baromètre FFPMI 2025 - Revenus et conditions d'activité des photographes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gris:#717E85; --orange:#E25623; --orange-fonce:#C4471A; --brun:#655043;
+  --encre:#263036; --texte:#3B464C; --trait:#DCE1E4; --voile:#F4F6F7; --fond:#FFFFFF;
+  --alerte:#F9B233; --erreur:#B3261E; --choisi:#FDF3EF;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){ --encre:#EEF1F3; --texte:#CBD2D6; --gris:#9AA6AC; --trait:#3A4449; --voile:#232A2E; --fond:#1A1F22; --choisi:#3A2A22; }}
+:root[data-theme="dark"]{ --encre:#EEF1F3; --texte:#CBD2D6; --gris:#9AA6AC; --trait:#3A4449; --voile:#232A2E; --fond:#1A1F22; --choisi:#3A2A22; }
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--fond);color:var(--texte);font-family:Montserrat,"Segoe UI",Arial,sans-serif;font-size:16px;line-height:1.55}
+.page{max-width:720px;margin:0 auto;padding:24px 20px 96px}
+header.top{display:flex;align-items:center;gap:14px;padding:8px 0 28px;border-bottom:1px solid var(--trait);margin-bottom:36px}
+header.top img{height:46px;width:auto;display:block;background:#fff;border-radius:8px;padding:4px 6px;margin-left:-6px}
+.testband{background:#FEF6E4;color:#5A4210;border-left:4px solid var(--alerte);border-radius:10px;padding:12px 16px;font-size:.9rem;margin:0 0 28px}
+.fb textarea{min-height:90px}
+.q .msg.warn{margin:4px 0 12px}
+details.calc{border:1.5px solid var(--trait);border-radius:10px;padding:12px 16px;margin:0 0 12px}
+details.calc summary{cursor:pointer;font-weight:600;color:var(--orange)}
+.calc-f{display:flex;flex-direction:column;gap:4px;margin:12px 0;font-size:.92rem;font-weight:500;color:var(--encre)}
+.calc-f input{max-width:220px}
+.calc-f small{color:var(--gris);font-weight:400;font-size:.8rem}
+.calc-res{margin:14px 0 0;font-size:.95rem;color:var(--encre)}
+.fb .q{margin-bottom:26px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.actions a{text-decoration:none;display:inline-block}
+textarea.out{min-height:220px;font-size:.85rem}
+.wordmark{font-weight:700;font-size:1.35rem;color:var(--encre);letter-spacing:.02em}
+.wordmark-sub{font-size:.8rem;color:var(--gris);font-weight:500;line-height:1.3}
+h1{font-weight:700;font-size:clamp(1.7rem,4.5vw,2.4rem);line-height:1.15;color:var(--encre);margin:0 0 8px}
+.h1-sub{font-weight:500;color:var(--gris);font-size:1.1rem;margin:0 0 28px}
+h2{font-weight:700;font-size:1.5rem;line-height:1.25;color:var(--encre);margin:0 0 28px}
+p{margin:0 0 14px}
+.intro p{max-width:62ch}
+.facts{display:flex;flex-wrap:wrap;gap:10px 26px;margin:22px 0 28px;padding:18px 0;border-top:1px solid var(--trait);border-bottom:1px solid var(--trait);font-weight:500;color:var(--encre);font-size:.95rem}
+.facts span b{font-weight:700}
+details.notice{background:var(--voile);border-radius:10px;padding:16px 18px;margin:0 0 20px}
+details.notice summary{cursor:pointer;font-weight:600;color:var(--encre)}
+details.notice p{font-size:.9rem;margin:12px 0 0}
+details.notice b{color:var(--encre)}
+.todo{background:#FFF1D6;padding:0 4px;border-radius:3px}
+.consent{display:flex;gap:12px;align-items:flex-start;font-size:.95rem;margin:0 0 28px;cursor:pointer}
+.consent input{width:22px;height:22px;accent-color:var(--orange);flex:none;margin-top:2px}
+.progress{margin:0 0 30px}
+.progress-label{font-size:.85rem;font-weight:600;color:var(--gris);margin-bottom:8px}
+.progress-bar{height:4px;background:var(--trait);border-radius:2px;overflow:hidden}
+.progress-bar i{display:block;height:100%;background:var(--orange);transition:width .35s ease}
+.q{margin:0 0 34px;scroll-margin-top:20px}
+.q-label{font-weight:600;color:var(--encre);font-size:1.05rem;margin:0 0 6px;line-height:1.45}
+.q-help{font-size:.88rem;color:var(--gris);margin:0 0 12px}
+.q-opts{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.opt{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1.5px solid var(--trait);border-radius:10px;cursor:pointer;background:var(--fond);transition:border-color .15s,background .15s}
+.opt:hover{border-color:var(--gris)}
+.opt input{margin:3px 0 0;width:18px;height:18px;accent-color:var(--orange);flex:none}
+.opt.on{border-color:var(--orange);background:var(--choisi)}
+.opt span{font-size:.97rem}
+input[type=number],input[type=text],select,textarea{font:inherit;color:var(--encre);border:1.5px solid var(--trait);border-radius:10px;padding:11px 14px;background:var(--fond);width:100%;max-width:100%}
+input[type=number]{max-width:180px}
+textarea{min-height:120px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px rgba(226,86,35,.18)}
+.inline{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px}
+.nsp{display:flex;gap:8px;align-items:center;font-size:.95rem;cursor:pointer}
+.nsp input{accent-color:var(--orange);width:18px;height:18px}
+.q.err .q-label{color:var(--erreur)}
+.q-err{color:var(--erreur);font-size:.88rem;font-weight:600;margin-top:8px}
+.msgs{margin:0 0 24px}
+.msg{border-radius:10px;padding:14px 16px;margin:0 0 10px;font-size:.93rem;border-left:4px solid}
+.msg.block{background:#FBEAE8;border-color:var(--erreur);color:#5F1712}
+.msg.warn{background:#FEF6E4;border-color:var(--alerte);color:#5A4210}
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:40px;padding-top:24px;border-top:1px solid var(--trait)}
+button{font:inherit;font-weight:600;border-radius:999px;padding:13px 26px;cursor:pointer;border:1.5px solid transparent;font-size:1rem}
+.btn-main{background:var(--orange);color:#fff}
+.btn-main:hover{background:var(--orange-fonce)}
+.btn-main:disabled{opacity:.45;cursor:not-allowed}
+.btn-ghost{background:transparent;color:var(--gris);border-color:var(--trait)}
+.btn-ghost:hover{color:var(--encre);border-color:var(--gris)}
+button:focus-visible,.opt:focus-within{outline:3px solid rgba(226,86,35,.35);outline-offset:2px}
+.end h2{margin-bottom:14px}
+.end .accent{display:block;width:48px;height:4px;background:var(--orange);border-radius:2px;margin:0 0 24px}
+pre.test{background:var(--voile);padding:14px;border-radius:10px;font-size:.78rem;overflow:auto;max-height:280px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+footer.bottom{margin-top:56px;font-size:.8rem;color:var(--gris)}
+@media (max-width:520px){ .page{padding:16px 16px 80px} .nav{flex-direction:column-reverse} .nav button{width:100%} }
+@media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="top" id="brand"></header>
+  <main id="app" aria-live="polite"></main>
+  <footer class="bottom">Fédération Française de la Photographie et des Métiers de l'Image</footer>
+</div>
+
+<script>
+/* ================= CONFIGURATION (à compléter avant mise en ligne) ================= */
+const CONFIG = {
+  SUPABASE_URL: "https://avtptsnkazxdqrnretrh.supabase.co",        // Supabase > Project Settings > API : Project URL (ex. https://abcdefgh.supabase.co)
+  SUPABASE_KEY: "sb_publishable_mlyb2sGbtNjXtktJgtvaGg_gDMYqa7e",        // Supabase > Project Settings > API Keys : clé publique "publishable" (sb_publishable_...) ou "anon"
+  SUPABASE_REGION: "Union européenne",  // Région choisie à la création du projet (ex. "Union européenne (Paris)")
+  ENDPOINT: "",            // (Alternative) URL Google Apps Script. Laisser vide si Supabase est utilisé.
+  LOGO_URL: "data:image/png;base64,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",  // Logo officiel FFPMI (intégré)
+  ADRESSE_SIEGE: "6 impasse Marthe Condat, 31200 Toulouse",
+  CONTACT_RGPD: "amelie.soubrie@ffpmi.eu",
+  DUREE_CONSERVATION: "3 ans après la clôture de l'enquête",
+  MODE_TEST: false,        // true = version de test : rien n'est envoyé, retour des testeurs en fin de parcours
+  EMAIL_RETOUR: "amelie.soubrie@ffpmi.eu"
+};
+/* ================================================================================== */
+</script>
+<script>
+/* ===== Schéma Baromètre FFPMI v1 (commun questionnaire + back office) ===== */
+const SCHEMA_VERSION = "v1-2026";
+
+const REGIONS = {ARA:"Auvergne-Rhône-Alpes",BFC:"Bourgogne-Franche-Comté",BRE:"Bretagne",CVL:"Centre-Val de Loire",COR:"Corse",GES:"Grand Est",HDF:"Hauts-de-France",IDF:"Île-de-France",NOR:"Normandie",NAQ:"Nouvelle-Aquitaine",OCC:"Occitanie",PDL:"Pays de la Loire",PAC:"Provence-Alpes-Côte d'Azur",OM:"Outre-mer"};
+const DEPTS = ("01|Ain|ARA;02|Aisne|HDF;03|Allier|ARA;04|Alpes-de-Haute-Provence|PAC;05|Hautes-Alpes|PAC;06|Alpes-Maritimes|PAC;07|Ardèche|ARA;08|Ardennes|GES;09|Ariège|OCC;10|Aube|GES;11|Aude|OCC;12|Aveyron|OCC;13|Bouches-du-Rhône|PAC;14|Calvados|NOR;15|Cantal|ARA;16|Charente|NAQ;17|Charente-Maritime|NAQ;18|Cher|CVL;19|Corrèze|NAQ;2A|Corse-du-Sud|COR;2B|Haute-Corse|COR;21|Côte-d'Or|BFC;22|Côtes-d'Armor|BRE;23|Creuse|NAQ;24|Dordogne|NAQ;25|Doubs|BFC;26|Drôme|ARA;27|Eure|NOR;28|Eure-et-Loir|CVL;29|Finistère|BRE;30|Gard|OCC;31|Haute-Garonne|OCC;32|Gers|OCC;33|Gironde|NAQ;34|Hérault|OCC;35|Ille-et-Vilaine|BRE;36|Indre|CVL;37|Indre-et-Loire|CVL;38|Isère|ARA;39|Jura|BFC;40|Landes|NAQ;41|Loir-et-Cher|CVL;42|Loire|ARA;43|Haute-Loire|ARA;44|Loire-Atlantique|PDL;45|Loiret|CVL;46|Lot|OCC;47|Lot-et-Garonne|NAQ;48|Lozère|OCC;49|Maine-et-Loire|PDL;50|Manche|NOR;51|Marne|GES;52|Haute-Marne|GES;53|Mayenne|PDL;54|Meurthe-et-Moselle|GES;55|Meuse|GES;56|Morbihan|BRE;57|Moselle|GES;58|Nièvre|BFC;59|Nord|HDF;60|Oise|HDF;61|Orne|NOR;62|Pas-de-Calais|HDF;63|Puy-de-Dôme|ARA;64|Pyrénées-Atlantiques|NAQ;65|Hautes-Pyrénées|OCC;66|Pyrénées-Orientales|OCC;67|Bas-Rhin|GES;68|Haut-Rhin|GES;69|Rhône|ARA;70|Haute-Saône|BFC;71|Saône-et-Loire|BFC;72|Sarthe|PDL;73|Savoie|ARA;74|Haute-Savoie|ARA;75|Paris|IDF;76|Seine-Maritime|NOR;77|Seine-et-Marne|IDF;78|Yvelines|IDF;79|Deux-Sèvres|NAQ;80|Somme|HDF;81|Tarn|OCC;82|Tarn-et-Garonne|OCC;83|Var|PAC;84|Vaucluse|PAC;85|Vendée|PDL;86|Vienne|NAQ;87|Haute-Vienne|NAQ;88|Vosges|GES;89|Yonne|BFC;90|Territoire de Belfort|BFC;91|Essonne|IDF;92|Hauts-de-Seine|IDF;93|Seine-Saint-Denis|IDF;94|Val-de-Marne|IDF;95|Val-d'Oise|IDF;971|Guadeloupe|OM;972|Martinique|OM;973|Guyane|OM;974|La Réunion|OM;976|Mayotte|OM;98|Autre collectivité d'outre-mer|OM")
+  .split(";").map(s => { const [c,n,r] = s.split("|"); return {c, n, r}; });
+const DEPT_REGION = Object.fromEntries(DEPTS.map(d => [d.c, d.r]));
+
+/* Bornes des tranches (en euros) */
+const CA_B = {ca0:[0,0],ca_0_5:[0,5000],ca_5_10:[5000,10000],ca_10_20:[10000,20000],ca_20_30:[20000,30000],ca_30_50:[30000,50000],ca_50_75:[50000,75000],ca_75_100:[75000,100000],ca_100_150:[100000,150000],ca_150_250:[150000,250000],ca_250_500:[250000,500000],ca_500p:[500000,null]};
+const REV_B = {def:[null,0],r0:[0,0],r_0_6:[0,6000],r_6_12:[6000,12000],r_12_18:[12000,18000],r_18_24:[18000,24000],r_24_30:[24000,30000],r_30_36:[30000,36000],r_36_48:[36000,48000],r_48_60:[48000,60000],r_60_90:[60000,90000],r_90p:[90000,null]};
+const RES_B = {def:[null,0],r0:[0,0],res_0_5:[0,5000],res_5_10:[5000,10000],res_10_20:[10000,20000],res_20_40:[20000,40000],res_40_75:[40000,75000],res_75p:[75000,null]};
+const AV_MID = {av_0_200:100,av_200_500:350,av_500_1000:750,av_1000_2000:1500,av_2000p:2500};
+const TR_B = {tr_neg:[null,0],tr_0_5:[0,5000],tr_5_10:[5000,10000],tr_10_25:[10000,25000],tr_25_50:[25000,50000],tr_50_100:[50000,100000],tr_100p:[100000,null]};
+const HOURS_MID = {lt10:5,"10_20":15,"20_30":25,"30_40":35,"40_50":45,"50_60":55,"60p":65};
+const CAPITAL_SHARE = {c100:1,c50_100:0.75,c25_50:0.375,c0_25:0.125};
+const PHOTO_ACTS = ["mariage","naissance","portrait","scolaire","identite","corporate","pub","sport","art","autre_photo"];
+
+const fmtE = n => new Intl.NumberFormat("fr-FR").format(n) + " €";
+function revLabel(k){
+  const [lo,hi] = REV_B[k];
+  if (k==="def") return "Résultat négatif / déficit";
+  if (k==="r0") return "0 €";
+  if (hi===null) return `${fmtE(lo)} ou plus par an (${fmtE(lo/12)} par mois ou plus)`;
+  if (lo===0) return `Plus de 0 à moins de ${fmtE(hi)} par an (moins de ${fmtE(hi/12)} par mois)`;
+  return `De ${fmtE(lo)} à moins de ${fmtE(hi)} par an (${fmtE(lo/12)} à ${fmtE(hi/12)} par mois)`;
+}
+function bandLabel(B,k){
+  const [lo,hi] = B[k];
+  if (k==="def") return "Déficit";
+  if (hi===0) return "0 €";
+  if (hi===null) return `${fmtE(lo)} ou plus`;
+  if (lo===0) return `Plus de 0 à moins de ${fmtE(hi)}`;
+  return `De ${fmtE(lo)} à moins de ${fmtE(hi)}`;
+}
+
+/* Prédicats de parcours */
+const inScope = r => r.q1==="oui_toujours" || r.q1==="oui_cesse";
+const n26 = r => r.q1==="non_2026";
+const anyPath = r => inScope(r) || n26(r);
+const isMicro = r => r.q9==="micro_bic" || r.q9==="micro_bnc";
+const isIS = r => r.q9==="is";
+const isSoc = r => ["eurl","sarl","sasu","sas"].includes(r.q7);
+const arr = v => Array.isArray(v) ? v : (v ? String(v).split("|").filter(Boolean) : []);
+const openWeeks = r => r.q4==="an" ? 52 : (Number(r.q4w) || 52);
+const workedWeeks = r => { if (r.q20c!==undefined && r.q20c!=="") return r.q20c==="nsp" ? null : openWeeks(r) - Number(r.q20c); if (r.q20!==undefined && r.q20!=="" && r.q20!=="nsp") return Number(r.q20); return null; };
+const revPositive = r => r.q26 && REV_B[r.q26] && REV_B[r.q26][1] !== 0 && r.q26!=="def";
+
+const SECTIONS = [
+  {id:"s1", title:"Votre activité et votre parcours"},
+  {id:"s2", title:"Votre structure d'exercice"},
+  {id:"s3", title:"Vos prestations et vos conditions d'exercice"},
+  {id:"s4", title:"Place de l'activité et temps de travail"},
+  {id:"s5", title:"Le chiffre d'affaires de l'entreprise"},
+  {id:"s6", title:"Le revenu que vous tirez de l'activité"},
+  {id:"s7", title:"Évolutions récentes"}
+];
+
+const Q = [
+ {id:"q1",s:"s1",type:"single",label:"Avez-vous exercé une activité photographique professionnelle indépendante en France en 2025 ?",
+  opts:[["oui_toujours","Oui, et je l'exerce toujours."],["oui_cesse","Oui, mais je l'ai cessée depuis."],["non_2026","Non, j'ai commencé en 2026."],["non","Non."]]},
+ {id:"q2",s:"s1",type:"dept",when:anyPath,label:r=> n26(r) ? "Dans quel département votre activité est-elle principalement implantée ?" : "Dans quel département votre activité était-elle principalement implantée en 2025 ?"},
+ {id:"q3",s:"s1",type:"number",min:1950,max:2025,when:inScope,label:"Depuis quelle année exercez-vous une activité photographique professionnelle indépendante ?",placeholder:"Ex. 2012"},
+ {id:"q4",s:"s1",type:"single",when:inScope,label:"Votre activité était-elle ouverte pendant toute l'année 2025 ?",opts:[["an","Oui, les 52 semaines."],["partiel","Non."]]},
+ {id:"q4w",s:"s1",type:"number",min:1,max:51,when:r=>inScope(r)&&r.q4==="partiel",label:"Pendant combien de semaines votre activité était-elle ouverte en 2025 ?",help:"Repère : 1 mois = environ 4 semaines, 3 mois = 13 semaines, 6 mois = 26 semaines, 9 mois = 39 semaines.",suffix:"semaines"},
+ {id:"q4r",s:"s1",type:"single",when:r=>inScope(r)&&r.q4==="partiel",label:"Pour quelle raison ?",opts:[["debut","Début d'activité."],["cessation","Cessation d'activité."],["interruption","Interruption temporaire (congé maternité, maladie, fermeture...)."],["autre","Autre situation."]]},
+ {id:"q5",s:"s1",type:"single",when:anyPath,label:"À quelle tranche d'âge appartenez-vous ?",opts:[["m25","Moins de 25 ans."],["25_34","25 à 34 ans."],["35_44","35 à 44 ans."],["45_54","45 à 54 ans."],["55_64","55 à 64 ans."],["65p","65 ans ou plus."],["nr","Je préfère ne pas répondre."]]},
+ {id:"q6",s:"s1",type:"single",when:anyPath,label:"Vous êtes :",opts:[["f","Une femme."],["h","Un homme."],["autre","Je me décris autrement."],["nr","Je préfère ne pas répondre."]]},
+
+ {id:"q7",s:"s2",type:"single",when:inScope,label:"Sous quelle forme exerciez-vous principalement en 2025 ?",help:"Si vous aviez plusieurs structures, répondez pour celle qui portait la plus grande part de votre activité photographique. Les questions sur l'entreprise concerneront cette structure.",
+  opts:[["ei","Entreprise individuelle, micro-entreprise comprise."],["eurl","EURL."],["sarl","SARL."],["sasu","SASU."],["sas","SAS."],["autre","Autre forme."],["nsp","Je ne sais pas."]]},
+ {id:"q7a",s:"s2",type:"text",when:r=>inScope(r)&&r.q7==="autre",label:"Précisez la forme juridique :"},
+ {id:"q8",s:"s2",type:"single",when:inScope,label:"Comment l'activité photographique de cette structure était-elle immatriculée en 2025 ?",
+  opts:[["artisanal","Comme activité artisanale (Registre national des entreprises, ex-Répertoire des métiers, rattachement à la Chambre de métiers et de l'artisanat)."],["commercial","Comme activité commerciale, sans immatriculation artisanale."],["liberal","Comme activité libérale."],["nsp","Je ne sais pas."]]},
+ {id:"q9",s:"s2",type:"single",when:inScope,label:"Quel était le régime fiscal de cette structure en 2025 ?",help:"Ces informations figurent sur votre déclaration de revenus ou votre espace URSSAF.",
+  opts:[["micro_bic","Micro-entreprise, bénéfices industriels et commerciaux (micro-BIC)."],["micro_bnc","Micro-entreprise, bénéfices non commerciaux (micro-BNC)."],["reel_bic","Régime réel à l'impôt sur le revenu, en BIC."],["reel_bnc","Régime réel à l'impôt sur le revenu, en BNC."],["is","Impôt sur les sociétés."],["autre","Autre."],["nsp","Je ne sais pas."]]},
+ {id:"q9c",s:"s2",type:"single",when:inScope,label:"Avez-vous changé de régime fiscal au cours de l'année 2025 ?",opts:[["non","Non."],["oui","Oui."]]},
+ {id:"q10",s:"s2",type:"single",when:inScope,label:"Exerciez-vous également une activité sous le régime des artistes-auteurs ?",opts:[["non","Non."],["parallele","Oui, en parallèle de mon activité artisanale."],["exclusif","Oui, exclusivement."],["nsp","Je ne sais pas."]]},
+ {id:"q11",s:"s2",type:"single",when:inScope,label:"Combien de personnes dirigeantes ou associées travaillaient effectivement dans cette structure, vous compris ?",opts:[["1","Une."],["2","Deux."],["3","Trois."],["4p","Quatre ou plus."]]},
+ {id:"q12",s:"s2",type:"single",when:inScope,label:"Combien de salariés employait-elle en moyenne en 2025, hors dirigeants et hors apprentis ?",opts:[["0","Aucun."],["lt1","Moins d'un équivalent temps plein."],["1_3","De 1 à moins de 3 équivalents temps plein."],["3_5","De 3 à moins de 5."],["5p","5 ou plus."],["nsp","Je ne sais pas."]]},
+
+ {id:"q12b",s:"s2",type:"single",when:inScope,label:"Et combien d'apprentis ou d'alternants avez-vous accueillis en 2025 ?",opts:[["0","Aucun"],["1","Un"],["2p","Deux ou plus"]]},
+ {id:"q13",s:"s3",type:"multi",when:inScope,label:"Quelles activités généraient du chiffre d'affaires dans cette structure en 2025 ?",help:"Plusieurs réponses possibles.",
+  opts:[["mariage","Mariage."],["naissance","Grossesse, nouveau-né et bébé."],["portrait","Portrait et famille."],["scolaire","Scolaire et petite enfance."],["identite","Photo d'identité."],["corporate","Portrait professionnel, entreprise et événementiel professionnel."],["pub","Publicité, produit, culinaire ou immobilier."],["sport","Sport et événementiel grand public."],["art","Vente d'œuvres d'art photographiques (tirages d'art, expositions)."],["autre_photo","Autres prestations photographiques."],["video","Vidéo."],["formation","Formation ou accompagnement."],["vente","Vente ou autres activités."]]},
+ {id:"q13a",s:"s3",type:"text",when:r=>inScope(r)&&arr(r.q13).includes("vente"),label:"Précisez les ventes ou autres activités :"},
+ {id:"q14",s:"s3",type:"single",dynamicFrom:"q13",when:r=>inScope(r)&&arr(r.q13).length>1,label:"Parmi ces activités, laquelle représentait la plus grande part du chiffre d'affaires ?"},
+ {id:"q14p",s:"s3",type:"single",when:r=>inScope(r)&&arr(r.q13).length>1,label:"Quelle part du chiffre d'affaires représentait-elle environ ?",opts:[["lt25","Moins de 25 %."],["25_50","De 25 à moins de 50 %."],["50_75","De 50 à moins de 75 %."],["75_100","De 75 à 100 %."],["nsp","Je ne sais pas."]]},
+ {id:"q15",s:"s3",type:"single",when:inScope,label:"Quelle part du chiffre d'affaires total provenait de la photographie, produits photographiques compris ?",opts:[["aucune","Aucune."],["0_25","Plus de 0 à moins de 25 %."],["25_50","De 25 à moins de 50 %."],["50_75","De 50 à moins de 75 %."],["75_100","De 75 à moins de 100 %."],["p100","100 %."],["nsp","Je ne sais pas."]]},
+ {id:"q16",s:"s3",type:"single",when:inScope,label:"Quelle était votre principale organisation de travail ?",opts:[["loue","Local professionnel dédié, loué."],["detenu","Local professionnel dédié, détenu par moi ou ma structure."],["domicile","Espace aménagé à domicile."],["partage","Local partagé ou loué ponctuellement."],["exterieur","Activité principalement chez les clients ou en extérieur, sans local dédié."],["autre","Autre."]]},
+
+ {id:"q17",s:"s4",type:"single",when:inScope,label:"En 2025, exerciez-vous une autre activité professionnelle rémunérée en dehors de cette structure ?",opts:[["non","Non."],["salarie","Oui, une activité salariée."],["independant","Oui, une autre activité indépendante."],["deux","Oui, les deux."]]},
+ {id:"q18",s:"s4",type:"single",when:r=>inScope(r)&&r.q17&&r.q17!=="non",label:"Laquelle occupait le plus de votre temps de travail ?",opts:[["photo","Mon activité dans la structure photographique."],["autre","Mon autre activité professionnelle."],["comparable","Les deux occupaient un temps comparable."],["variable","Cela a beaucoup changé au cours de l'année."]]},
+ {id:"q19",s:"s4",type:"single",when:inScope,label:"En moyenne, combien d'heures par semaine consacriez-vous à votre activité dans la structure photographique, pendant les semaines travaillées ?",help:"Inclure les prises de vue, préparations, déplacements professionnels, retouches, ventes, communication, comptabilité et gestion.",
+  opts:[["lt10","Moins de 10 heures."],["10_20","De 10 à moins de 20 heures."],["20_30","De 20 à moins de 30 heures."],["30_40","De 30 à moins de 40 heures."],["40_50","De 40 à moins de 50 heures."],["50_60","De 50 à moins de 60 heures."],["60p","60 heures ou plus."],["nsp","Je ne sais pas."]]},
+ {id:"q20c",s:"s4",type:"offweeks",when:inScope,label:"En 2025, combien de semaines de congés avez-vous prises, c'est-à-dire des semaines sans aucun travail pour votre activité ?",help:"Comptez aussi les fermetures et les arrêts (maladie, maternité...). Une semaine où vous avez seulement fait de la retouche, de la gestion ou de la prospection compte comme travaillée, pas comme congé."},
+ {id:"q21",s:"s4",type:"single",when:inScope,label:"Quelle part de ce temps consacriez-vous aux prises de vue ?",opts:[["lt25","Moins de 25 %."],["25_50","De 25 à moins de 50 %."],["50_75","De 50 à moins de 75 %."],["75_100","De 75 à 100 %."],["nsp","Je ne sais pas."]]},
+ {id:"q22",s:"s4",type:"single",when:inScope,label:"En 2025, auriez-vous souhaité avoir plus de travail dans votre activité photographique ?",opts:[["non","Non, mon volume de travail me convenait."],["demande","Oui, mais je n'avais pas assez de clients ou de commandes."],["autre_act","Oui, mais mon autre activité professionnelle me limitait."],["perso","Oui, mais des contraintes personnelles ou de santé me limitaient."],["autre","Autre situation."]],
+  optsFn:r=>QMAP.q22.opts.filter(o=>o[0]!=="autre_act" || (r.q17 && r.q17!=="non"))},
+
+ {id:"q23",s:"s5",type:"single",when:inScope,label:"Quel était le chiffre d'affaires annuel hors taxes de votre structure pour 2025 ?",help:"Il s'agit du chiffre d'affaires avant déduction des dépenses, cotisations et rémunérations. Si vous ne facturez pas de TVA, indiquez votre chiffre d'affaires déclaré, sans déduire une TVA fictive.",
+  opts:[...Object.keys(CA_B).map(k=>[k,bandLabel(CA_B,k)+"."]),["nsp","Je ne sais pas."],["nr","Je préfère ne pas répondre."]]},
+ {id:"q24",s:"s5",type:"single",when:r=>inScope(r)&&Number(r.q3)!==2025,label:"Par rapport à 2024, votre chiffre d'affaires 2025 était :",opts:[["hausse","En hausse."],["stable","Stable."],["baisse","En baisse."],["pas_2024","Je n'exerçais pas encore en 2024 (ou pas sur toute l'année)."],["nsp","Je ne sais pas."]]},
+ {id:"q25",s:"s5",type:"single",when:inScope,label:"À quelle période ce montant correspond-il ?",opts:[["civile","L'année civile 2025."],["exo12","Un exercice comptable de 12 mois se terminant en 2025."],["lt12","Une période inférieure à 12 mois."],["autre","Une autre période."],["nsp","Je ne sais pas."]]},
+ {id:"q25d",s:"s5",type:"text",when:r=>inScope(r)&&["exo12","lt12","autre"].includes(r.q25),label:"Précisez les dates de début et de fin :",placeholder:"Ex. du 01/04/2024 au 31/03/2025"},
+
+ {id:"q26",s:"s6",type:"single",when:inScope,label:"Quel revenu personnel annuel avez-vous tiré de cette structure en 2025, après cotisations sociales obligatoires et avant impôt personnel sur le revenu ?",
+  help:r=> "Ne pas inclure le revenu du conjoint, les autres emplois, les pensions, les allocations ou les dividendes. Même si vos revenus sont irréguliers, l'équivalent mensuel correspond simplement au montant annuel divisé par 12. " + (isMicro(r)
+    ? "Micro-entreprise : il s'agit de ce qu'il vous reste après avoir payé vos cotisations sociales et vos dépenses professionnelles réelles, à partir du chiffre d'affaires que vous avez déclaré pour 2025."
+    : isIS(r) ? "Structure à l'impôt sur les sociétés : votre rémunération personnelle nette de cotisations sociales obligatoires, avant impôt sur le revenu, hors dividendes."
+    : "Entreprise au réel à l'impôt sur le revenu : votre bénéfice professionnel ou votre quote-part de bénéfice, après charges professionnelles et cotisations sociales obligatoires. Ce montant peut différer des sommes transférées sur votre compte personnel."),
+  warnFn:r=> isMicro(r) ? "Attention : n'indiquez pas votre chiffre d'affaires déclaré à l'URSSAF ou aux impôts. C'est un montant avant cotisations et dépenses, il ne correspond pas à votre revenu. Si vous hésitez, utilisez l'aide au calcul ci-dessous." : "",
+  calcMicro:true,
+  optsFn:r=>[...Object.keys(REV_B).map(k=>[k,revLabel(k)+"."]),["nsp","Je ne sais pas l'estimer."],["nr","Je préfère ne pas répondre."]]},
+ {id:"q27",s:"s6",type:"single",when:r=>inScope(r)&&r.q26&&!["nsp","nr"].includes(r.q26),label:"Sur quoi repose votre réponse ?",opts:[["doc","Un document comptable, fiscal ou un récapitulatif de rémunération."],["calcul","Un calcul à partir de mes recettes et dépenses."],["estim","Une estimation approximative."],["autre","Autre."]]},
+ {id:"q28",s:"s6",type:"single",when:r=>inScope(r)&&isIS(r),label:"Quel a été le résultat net de la société pour l'exercice 2025, après impôt sur les sociétés et avant distribution de dividendes ?",help:"Ce montant figure dans le bilan ou la liasse fiscale. Votre rémunération de dirigeant y est déjà déduite.",
+  opts:[...Object.keys(RES_B).map(k=>[k,bandLabel(RES_B,k)+"."]),["nsp","Je ne sais pas."],["nr","Je préfère ne pas répondre."]]},
+ {id:"q28c",s:"s6",type:"single",when:r=>inScope(r)&&isIS(r),label:"Quelle part du capital de cette société détenez-vous personnellement ?",opts:[["c100","100 %."],["c50_100","De 50 à moins de 100 %."],["c25_50","De 25 à moins de 50 %."],["c0_25","Moins de 25 %."],["nsp","Je ne sais pas."]]},
+ {id:"q28a",s:"s6",type:"multi",exclusive:"aucune",when:r=>inScope(r)&&isIS(r),label:"En 2025, votre société a-t-elle pris en charge des dépenses qui vous bénéficient aussi personnellement ?",help:"Plusieurs réponses possibles. Il s'agit d'avantages ou de dépenses à usage mixte, pas des dépenses purement professionnelles (matériel photo, loyer du studio...).",
+  opts:[["vehicule","Véhicule (achat, location, carburant, entretien)."],["prevoyance","Prévoyance ou mutuelle."],["retraite","Épargne retraite (PER ou contrat retraite)."],["epargne_sal","Épargne salariale (intéressement, PEE, PER collectif)."],["repas","Repas."],["telephone","Téléphone, internet ou matériel informatique à usage mixte."],["logement","Loyer ou indemnité pour un espace de travail à votre domicile."],["autre","Autre."],["aucune","Aucune."]]},
+ {id:"q28m",s:"s6",type:"single",when:r=>inScope(r)&&isIS(r)&&arr(r.q28a).some(v=>v!=="aucune"),label:"Au total, à combien estimez-vous ces dépenses en moyenne par mois ?",help:"Comptez uniquement la part qui vous bénéficie personnellement. Une estimation suffit.",
+  opts:[["av_0_200","Moins de 200 € par mois."],["av_200_500","De 200 à moins de 500 € par mois."],["av_500_1000","De 500 à moins de 1 000 € par mois."],["av_1000_2000","De 1 000 à moins de 2 000 € par mois."],["av_2000p","2 000 € par mois ou plus."],["nsp","Je ne sais pas."]]},
+ {id:"q28t",s:"s6",type:"single",when:r=>inScope(r)&&isIS(r),label:"Quel était le montant approximatif de la trésorerie de la société à la clôture de l'exercice 2025 ?",help:"Solde des comptes bancaires et des placements de la société, tel qu'il figure au bilan.",
+  opts:[["tr_neg","Nulle ou négative (découvert)."],["tr_0_5","Moins de 5 000 €."],["tr_5_10","De 5 000 à moins de 10 000 €."],["tr_10_25","De 10 000 à moins de 25 000 €."],["tr_25_50","De 25 000 à moins de 50 000 €."],["tr_50_100","De 50 000 à moins de 100 000 €."],["tr_100p","100 000 € ou plus."],["nsp","Je ne sais pas."],["nr","Je préfère ne pas répondre."]]},
+ {id:"q29",s:"s6",type:"single",when:r=>inScope(r)&&isSoc(r),label:"Avez-vous personnellement reçu des dividendes de cette structure en 2025 ?",help:"Montant avant fiscalité personnelle.",
+  opts:[["aucun","Aucun."],["d_0_5","Plus de 0 à moins de 5 000 €."],["d_5_10","De 5 000 à moins de 10 000 €."],["d_10_20","De 10 000 à moins de 20 000 €."],["d_20_40","De 20 000 à moins de 40 000 €."],["d_40p","40 000 € ou plus."],["nsp","Je ne sais pas."],["nr","Je préfère ne pas répondre."]]},
+ {id:"q30",s:"s6",type:"single",when:inScope,label:"Quelle part de l'ensemble de vos revenus professionnels personnels provenait de cette structure en 2025 ?",help:"Exclure les revenus du conjoint, les pensions et les allocations.",
+  opts:[["aucun","Aucun revenu professionnel positif tiré de cette structure."],["0_25","Plus de 0 à moins de 25 %."],["25_50","De 25 à moins de 50 %."],["50_75","De 50 à moins de 75 %."],["75_100","De 75 à moins de 100 %."],["p100","100 %."],["nsp","Je ne sais pas."],["nr","Je préfère ne pas répondre."]]},
+
+ {id:"q31",s:"s7",type:"multi",exclusive:"aucun",when:inScope,label:"Depuis le début de 2026, votre situation a-t-elle changé ?",help:"Plusieurs réponses possibles.",
+  opts:[["developpe","J'ai développé mon activité photographique (plus de clients ou de commandes)."],["nouvelle_presta","J'ai lancé une nouvelle prestation ou spécialité."],["investi","J'ai fait un investissement important (matériel, studio, site internet...)."],["embauche","J'ai embauché (salarié, apprenti ou alternant)."],["reduit","J'ai réduit mon activité photographique."],["plus_autre","J'ai commencé ou augmenté une autre activité rémunérée."],["moins_autre","J'ai diminué ou arrêté une autre activité rémunérée."],["ouvert_local","J'ai ouvert ou pris un local professionnel."],["ferme_local","J'ai fermé ou quitté un local professionnel."],["statut","J'ai changé de statut juridique ou de régime fiscal."],["cesse","J'ai cessé mon activité photographique."],["autre","Autre changement important."],["aucun","Aucun de ces changements."]]},
+ {id:"q31m",s:"s7",type:"single",when:r=>inScope(r)&&arr(r.q31).some(v=>["reduit","plus_autre","ferme_local","cesse","autre"].includes(v)),label:"Quel est le motif principal de cette réduction ou de ce changement ?",opts:[["eco","Raison économique."],["choix","Choix personnel."],["sante","Santé."],["retraite","Retraite."],["autre","Autre."]]},
+ {id:"q31r",s:"s7",type:"single",when:inScope,label:"Depuis le début de 2026, le revenu que vous tirez de votre activité photographique est-il, par rapport à la même période de 2025 :",help:"Une tendance suffit, sans calcul précis.",opts:[["hausse","En hausse."],["stable","Stable."],["baisse","En baisse."],["nsp","Je ne sais pas encore."]]},
+ {id:"q32",s:"s7",type:"single",when:anyPath,label:"Pour les douze prochains mois, quelle est votre intention principale ?",opts:[["developper","Développer mon activité photographique."],["maintenir","Maintenir mon activité à un niveau comparable."],["reduire","Réduire mon activité."],["cesser","Cesser mon activité."],["nsp","Je ne sais pas encore."]]},
+ {id:"q33",s:"s7",type:"single",when:anyPath,label:"Êtes-vous adhérent d'une organisation professionnelle ?",opts:[["ffpmi","FFPMI."],["autre","Une autre organisation."],["plusieurs_ffpmi","Plusieurs organisations, dont la FFPMI."],["plusieurs_hors","Plusieurs organisations, hors FFPMI."],["aucune","Aucune."],["nr","Je préfère ne pas répondre."]]},
+ {id:"q34",s:"s7",type:"textarea",optional:true,when:anyPath,label:"Souhaitez-vous préciser un élément important pour comprendre votre situation ?",help:"Facultatif. Merci de ne pas indiquer votre nom, celui de votre entreprise ou toute information permettant de vous identifier."}
+];
+/* Réponses affichées sans point final */
+const noDot = l => String(l).replace(/(?<!\.)\.$/,"");
+Q.forEach(q => { if (q.opts) q.opts.forEach(o => o[1] = noDot(o[1])); });
+const QMAP = Object.fromEntries(Q.map(q=>[q.id,q]));
+const qLabel = (q,r) => typeof q.label==="function" ? q.label(r) : q.label;
+const qHelp = (q,r) => typeof q.help==="function" ? q.help(r) : q.help;
+function qOpts(q,r){
+  if (q.optsFn) return q.optsFn(r).map(o=>[o[0],noDot(o[1])]);
+  if (q.dynamicFrom) { const all = QMAP[q.dynamicFrom].opts; const sel = arr(r[q.dynamicFrom]); return all.filter(o=>sel.includes(o[0])); }
+  return q.opts || [];
+}
+function optLabel(qid, v){
+  const q = QMAP[qid]; if (!q) return v;
+  if (qid==="q14") { const o = QMAP.q13.opts.find(o=>o[0]===v); return o ? o[1].replace(/\.$/,"") : v; }
+  if (qid==="q26") return REV_B[v] ? revLabel(v) : ({nsp:"Je ne sais pas l'estimer",nr:"Je préfère ne pas répondre"}[v]||v);
+  if (qid==="q2") { const d = DEPTS.find(d=>d.c===v); return d ? `${d.c} - ${d.n}` : v; }
+  const o = (q.opts||[]).find(o=>o[0]===v); return o ? o[1].replace(/\.$/,"") : v;
+}
+const visible = (q,r) => !q.when || !!q.when(r);
+
+/* Valeurs déduites automatiquement */
+function applyAuto(r){
+  const acts = arr(r.q13);
+  if (inScope(r) && acts.length===1){ r.q14 = acts[0]; r.q14p = "75_100"; }
+  if (inScope(r) && Number(r.q3)===2025) r.q24 = "pas_2024";
+  return r;
+}
+
+/* Contrôles de cohérence : test(r) === true signale un problème */
+const RULES = [
+ {id:"b_micro_forme",s:"s2",type:"block",test:r=>isMicro(r)&&["sarl","sas","sasu"].includes(r.q7),msg:"Le régime micro n'est pas compatible avec une SARL, une SAS ou une SASU. Vérifiez la forme juridique ou le régime fiscal."},
+ {id:"w_debut",s:"s1",type:"warn",test:r=>inScope(r)&&Number(r.q3)===2025&&(r.q4==="an"||(r.q4==="partiel"&&r.q4r&&r.q4r!=="debut")),msg:"Vous indiquez avoir démarré en 2025 : votre activité était-elle vraiment ouverte toute l'année, ou s'agit-il d'un début d'activité ?"},
+ {id:"w_photo_aucune",s:"s3",type:"warn",test:r=>{const a=arr(r.q13);return a.length&&a.every(x=>PHOTO_ACTS.includes(x))&&r.q15==="aucune";},msg:"Vous n'avez coché que des activités photographiques, mais indiquez qu'aucune part du chiffre d'affaires ne provient de la photographie."},
+ {id:"w_photo_100",s:"s3",type:"warn",test:r=>arr(r.q13).some(x=>["video","formation","vente"].includes(x))&&r.q15==="p100",msg:"Vous avez coché la vidéo, la formation ou la vente, mais indiquez que 100 % du chiffre d'affaires provient de la photographie."},
+ {id:"b_weeks",s:"s4",type:"block",test:r=>r.q20c!=="nsp"&&Number(r.q20c)>=openWeeks(r),msg:"Le nombre de semaines de congés doit être inférieur au nombre de semaines d'ouverture indiqué en partie 1."},
+ {id:"w_heures",s:"s4",type:"warn",test:r=>r.q19==="60p"&&(workedWeeks(r)||0)>=49,msg:"60 heures ou plus par semaine pendant 49 semaines ou plus représentent plus de 2 900 heures dans l'année. Pouvez-vous vérifier ?"},
+ {id:"w_micro_ca",s:"s5",type:"warn",test:r=>isMicro(r)&&CA_B[r.q23]&&CA_B[r.q23][0]>=100000,msg:"Un chiffre d'affaires de 100 000 € ou plus dépasse probablement le plafond de la micro-entreprise. Pouvez-vous vérifier le régime ou le montant ?"},
+ {id:"w_2024",s:"s5",type:"warn",test:r=>Number(r.q3)&&Number(r.q3)<2024&&r.q24==="pas_2024",msg:"Vous indiquez exercer depuis avant 2024, mais ne pas avoir exercé en 2024. Pouvez-vous vérifier ?"},
+ {id:"b_rev_ca",s:"s6",type:"block",test:r=>{const c=CA_B[r.q23],v=REV_B[r.q26];if(!c||!v||r.q26==="def")return false;if(c[1]===0)return v[1]!==0;return c[1]!==null&&v[0]>=c[1];},msg:"Le revenu personnel indiqué est supérieur au chiffre d'affaires déclaré en partie 5. Vérifiez l'une des deux réponses."},
+ {id:"b_q30",s:"s6",type:"block",test:r=>revPositive(r)&&r.q30==="aucun",msg:"Vous indiquez un revenu positif, mais aucun revenu professionnel positif tiré de cette structure. Vérifiez l'une des deux réponses."},
+ {id:"w_cesse",s:"s7",type:"warn",test:r=>r.q1==="oui_toujours"&&arr(r.q31).includes("cesse"),msg:"En début de questionnaire, vous indiquiez exercer toujours votre activité. Avez-vous bien cessé depuis ?"}
+];
+const RULE_MAP = Object.fromEntries(RULES.map(r=>[r.id,r]));
+
+</script>
+<script>
+(function(){
+const app = document.getElementById("app");
+const brand = document.getElementById("brand");
+brand.innerHTML = CONFIG.LOGO_URL
+  ? `<img src="${CONFIG.LOGO_URL}" alt="FFPMI - Fédération Française de la Photographie et des Métiers de l'Image">`
+  : `<div><div class="wordmark">FFPMI</div><div class="wordmark-sub">Fédération Française de la Photographie<br>et des Métiers de l'Image</div></div>`;
+
+const R = {};                 // réponses
+let step = 0;                 // 0 = accueil, 1..7 = parties, 8 = fin
+let ackWarn = {};             // avertissements déjà affichés par partie
+const alertes = new Set();    // avertissements maintenus par le répondant
+const CALC = {ca:"",cot:"",dep:"",msg:""};  // aide au calcul micro (montants jamais envoyés)
+const t0 = Date.now();
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const todo = v => v ? esc(v) : `<span class="todo">[à compléter]</span>`;
+
+function notice(){
+  return `<details class="notice"><summary>Notice d'information sur vos données</summary>
+  <p><b>Responsable du traitement.</b> Fédération Française de la Photographie et des Métiers de l'Image (FFPMI), SIREN 319 403 697, ${todo(CONFIG.ADRESSE_SIEGE)}, représentée par sa présidente. Contact : ${todo(CONFIG.CONTACT_RGPD)}.</p>
+  <p><b>Finalité.</b> Les réponses servent uniquement à produire le Baromètre FFPMI des revenus et conditions d'activité des photographes, publié sous forme de statistiques regroupées. Elles ne sont utilisées ni à des fins commerciales, ni pour vous contacter, ni pour vérifier votre situation individuelle.</p>
+  <p><b>Base légale.</b> Votre consentement. La participation est facultative et vous pouvez interrompre le questionnaire à tout moment.</p>
+  <p><b>Données collectées.</b> Uniquement vos réponses. Aucun nom, adresse email ou numéro SIRET n'est demandé, et la FFPMI n'enregistre pas votre adresse IP. Les hébergeurs techniques peuvent conserver temporairement des journaux de connexion, pour la sécurité de leurs services.</p>
+  <p><b>Anonymat et publication.</b> Aucun résultat n'est publié pour un groupe de moins de 10 répondants. Les croisements qui pourraient permettre de reconnaître une personne ne sont pas publiés.</p>
+  <p><b>Destinataires et hébergement.</b> Les réponses individuelles ne sont accessibles qu'aux personnes chargées de l'étude au sein de la FFPMI. Elles sont enregistrées dans une base de données hébergée par Supabase Inc., sur des serveurs situés en ${esc(CONFIG.SUPABASE_REGION)}. La page du questionnaire est hébergée par GitHub Inc. (GitHub Pages). Ces prestataires agissent comme sous-traitants de la FFPMI. Ce sont des sociétés américaines : si des données devaient être transférées hors de l'Union européenne, ce transfert serait encadré par les garanties prévues par le RGPD, notamment les clauses contractuelles types de la Commission européenne.</p>
+  <p><b>Durée de conservation.</b> Les réponses individuelles sont conservées ${esc(CONFIG.DUREE_CONSERVATION)}, afin de permettre la comparaison avec les éditions suivantes, puis supprimées. Les résultats regroupés publiés sont conservés sans limite de durée.</p>
+  <p><b>Vos droits.</b> Vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation et d'opposition, ainsi que du droit de retirer votre consentement. Comme aucune donnée d'identification n'est collectée, il peut être impossible de retrouver votre réponse après son envoi. Vous pouvez adresser une réclamation à la CNIL (www.cnil.fr).</p>
+  </details>`;
+}
+
+function renderIntro(){
+  let already = false; try { already = localStorage.getItem("barometre_ffpmi_2025_envoye")==="1"; } catch(e){}
+  app.innerHTML = `<section class="intro">
+    ${CONFIG.MODE_TEST ? `<div class="testband"><b>Version de test.</b> Vos réponses ne sont pas enregistrées. À la fin, quelques questions vous permettront de donner votre avis sur le questionnaire.</div>` : ""}
+    <h1>Baromètre FFPMI 2025</h1>
+    <p class="h1-sub">Revenus et conditions d'activité des photographes artisans</p>
+    <p>Cette enquête vise à mieux connaître la réalité économique de notre profession : activité, temps de travail, chiffre d'affaires et revenu personnel.</p>
+    <p>Les questions portent sur l'année 2025, sauf indication contraire. Les montants sont demandés par tranches. Merci de répondre pour votre situation personnelle ; lorsque la question concerne l'entreprise, cela est précisé.</p>
+    <p>Elle est ouverte à tous les photographes professionnels indépendants, adhérents ou non de la FFPMI. Plus vous serez nombreux et divers à répondre, plus les résultats seront fidèles à la réalité du métier : n'hésitez pas à la partager autour de vous.</p>
+    <div class="facts"><span><b>12 à 15 minutes</b></span><span><b>Anonyme</b></span><span>Aucun résultat publié sous <b>10 répondants</b></span></div>
+    ${already ? `<div class="msg warn">Une réponse a déjà été envoyée depuis cet appareil. Merci de ne répondre qu'une seule fois par personne.</div>` : ""}
+    ${notice()}
+    <label class="consent"><input type="checkbox" id="consent"> <span>J'ai pris connaissance de la notice d'information et j'accepte que mes réponses soient utilisées dans les conditions décrites.</span></label>
+    <button class="btn-main" id="start" disabled>Commencer le questionnaire</button>
+  </section>`;
+  const c = document.getElementById("consent"), s = document.getElementById("start");
+  c.onchange = () => s.disabled = !c.checked;
+  s.onclick = () => go(1);
+}
+
+const secQs = sid => Q.filter(q => q.s===sid && visible(q,R));
+function nextStep(from, dir){
+  let s = from + dir;
+  while (s>=1 && s<=7 && secQs(SECTIONS[s-1].id).length===0) s += dir;
+  return s;
+}
+
+function qHTML(q){
+  const v = R[q.id];
+  let body = "";
+  const help = qHelp(q,R);
+  if (q.type==="single" || q.type==="multi"){
+    const type = q.type==="single" ? "radio" : "checkbox";
+    const sel = q.type==="multi" ? arr(v) : [v];
+    body = `<div class="q-opts" role="${q.type==="single"?"radiogroup":"group"}">` + qOpts(q,R).map(([val,lab]) =>
+      `<label class="opt ${sel.includes(val)?"on":""}"><input type="${type}" name="${q.id}" value="${esc(val)}" ${sel.includes(val)?"checked":""}><span>${esc(q.id==="q14"?lab.replace(/\.$/,""):lab)}</span></label>`).join("") + `</div>`;
+  } else if (q.type==="dept"){
+    body = `<select name="${q.id}"><option value="">Choisir un département</option>` + DEPTS.map(d=>`<option value="${d.c}" ${v===d.c?"selected":""}>${d.c} - ${esc(d.n)}</option>`).join("") + `</select>`;
+  } else if (q.type==="number"){
+    body = `<div class="inline"><input type="number" inputmode="numeric" name="${q.id}" min="${q.min}" max="${q.max}" value="${v??""}" placeholder="${q.placeholder||""}">${q.suffix?`<span>${q.suffix}</span>`:""}</div>`;
+  } else if (q.type==="weeks"){
+    const max = openWeeks(R);
+    body = `<p class="q-help">Votre activité était ouverte ${max} semaines en 2025.</p>
+      <div class="inline"><input type="number" inputmode="numeric" name="${q.id}" min="1" max="${max}" value="${v&&v!=="nsp"?v:""}" ${v==="nsp"?"disabled":""}><span>semaines</span>
+      <label class="nsp"><input type="checkbox" data-nsp="${q.id}" ${v==="nsp"?"checked":""}> Je ne sais pas</label></div>`;
+  } else if (q.type==="offweeks"){
+    const max = openWeeks(R) - 1;
+    const w = v!==undefined && v!=="" && v!=="nsp" ? openWeeks(R) - Number(v) : null;
+    body = `<p class="q-help">Votre activité était ouverte ${openWeeks(R)} semaines en 2025.</p>
+      <div class="inline"><input type="number" inputmode="numeric" name="${q.id}" min="0" max="${max}" value="${v&&v!=="nsp"?v:(v==="0"?"0":"")}" ${v==="nsp"?"disabled":""}><span>semaines</span>
+      <label class="nsp"><input type="checkbox" data-nsp="${q.id}" ${v==="nsp"?"checked":""}> Je ne sais pas</label></div>
+      <p class="q-help" id="wk-${q.id}" style="margin-top:10px">${w!==null && w>0 ? `Soit ${w} semaines travaillées.` : ""}</p>`;
+  } else if (q.type==="text"){
+    body = `<input type="text" name="${q.id}" value="${esc(v||"")}" placeholder="${q.placeholder||""}">`;
+  } else if (q.type==="textarea"){
+    body = `<textarea name="${q.id}" maxlength="2000">${esc(v||"")}</textarea>`;
+  }
+  const warn = q.warnFn ? q.warnFn(R) : "";
+  let calc = "";
+  if (q.calcMicro && isMicro(R)){
+    const inp = (k,l,h) => `<label class="calc-f"><span>${l}</span><input type="number" inputmode="numeric" min="0" data-calc="${k}" value="${esc(CALC[k])}" placeholder="0"><small>${h}</small></label>`;
+    calc = `<details class="calc" ${CALC.msg?"open":""}><summary>Je ne sais pas quel montant indiquer : aide au calcul</summary>
+      <p class="q-help">Ces montants servent uniquement au calcul et ne sont pas envoyés. Seule la tranche est enregistrée.</p>
+      ${inp("ca","Chiffre d'affaires déclaré pour 2025 (€)","Total de vos déclarations URSSAF de l'année")}
+      ${inp("cot","Cotisations sociales payées pour 2025 (€)","Montant indiqué dans votre espace URSSAF")}
+      ${inp("dep","Dépenses professionnelles réelles en 2025 (€)","Matériel, loyer, logiciels, déplacements, formation, assurance, sous-traitance...")}
+      <button type="button" class="btn-ghost" id="calcBtn">Calculer et choisir la tranche</button>
+      ${CALC.msg?`<p class="calc-res">${CALC.msg}</p>`:""}</details>`;
+  }
+  return `<div class="q" id="blk-${q.id}"><div class="q-label">${esc(qLabel(q,R))}</div>${help?`<p class="q-help">${esc(help)}</p>`:""}${warn?`<div class="msg warn">${esc(warn)}</div>`:""}${calc}${body}</div>`;
+}
+
+function renderSection(msgs){
+  const sec = SECTIONS[step-1];
+  const qs = secQs(sec.id);
+  app.innerHTML = `<div class="progress"><div class="progress-label">Partie ${step} sur 7</div><div class="progress-bar"><i style="width:${(step-1)/7*100}%"></i></div></div>
+    <h2>${esc(sec.title)}</h2>
+    <div class="msgs">${(msgs||[]).map(m=>`<div class="msg ${m.type}">${esc(m.msg)}</div>`).join("")}</div>
+    <form id="f" novalidate>${qs.map(qHTML).join("")}
+      <div class="hp" aria-hidden="true"><label>Ne pas remplir <input type="text" name="site_web" tabindex="-1" autocomplete="off"></label></div>
+      <div class="nav"><button type="button" class="btn-ghost" id="back">Retour</button><button type="submit" class="btn-main" id="next">${nextStep(step,1)>7?"Envoyer mes réponses":"Continuer"}</button></div>
+    </form>`;
+  const f = document.getElementById("f");
+  f.addEventListener("change", e => {
+    const el = e.target;
+    if (el.dataset.nsp){ R[el.dataset.nsp] = el.checked ? "nsp" : ""; return renderSection(); }
+    if (el.dataset.calc) return;
+    const q = QMAP[el.name]; if (!q) return;
+    if (q.type==="multi"){
+      let cur = arr(R[q.id]);
+      if (el.checked){ cur.push(el.value); if (q.exclusive){ cur = el.value===q.exclusive ? [q.exclusive] : cur.filter(x=>x!==q.exclusive); } }
+      else cur = cur.filter(x=>x!==el.value);
+      R[q.id] = [...new Set(cur)];
+      if (q.id==="q13" && R.q14 && !R.q13.includes(R.q14)) delete R.q14;
+      renderSection();
+    } else if (q.type==="single" || q.type==="dept"){ R[q.id] = el.value; if (q.id==="q17" && el.value==="non" && R.q22==="autre_act") delete R.q22; renderSection(); }
+  });
+  f.addEventListener("input", e => {
+    const el = e.target; const q = QMAP[el.name];
+    if (q && ["number","weeks","offweeks","text","textarea"].includes(q.type)) R[q.id] = el.value.trim();
+    if (q && q.type==="offweeks"){ const n = Number(el.value), w = openWeeks(R) - n; const out = document.getElementById("wk-"+q.id);
+      if (out) out.textContent = el.value!=="" && Number.isInteger(n) && n>=0 && w>0 ? `Soit ${w} semaines travaillées.` : ""; }
+  });
+  f.addEventListener("input", e => { const k = e.target.dataset && e.target.dataset.calc; if (k) CALC[k] = e.target.value; });
+  const cb = document.getElementById("calcBtn");
+  if (cb) cb.onclick = () => {
+    const n = k => Math.max(0, Number(String(CALC[k]).replace(",", ".")) || 0);
+    if (!n("ca")){ CALC.msg = "Indiquez au moins votre chiffre d'affaires déclaré."; return renderSection(); }
+    const rev = n("ca") - n("cot") - n("dep");
+    let key = rev < 0 ? "def" : rev === 0 ? "r0" : Object.keys(REV_B).find(k => { const [lo,hi] = REV_B[k]; return k!=="def" && k!=="r0" && rev >= lo && (hi===null || rev < hi); });
+    R.q26 = key; if (!R.q27) R.q27 = "calcul";
+    const f2 = v => new Intl.NumberFormat("fr-FR").format(Math.round(v)) + " €";
+    CALC.msg = rev < 0 ? `Résultat négatif : ${f2(rev)}. La réponse « déficit » a été cochée ci-dessous.` : `Revenu estimé : <b>${f2(rev)} par an</b>, soit ${f2(rev/12)} par mois. La tranche correspondante a été cochée ci-dessous : vérifiez-la.`;
+    renderSection();
+  };
+  f.onsubmit = e => { e.preventDefault(); if (f.site_web && f.site_web.value) return; validateAndGo(); };
+  document.getElementById("back").onclick = () => go(nextStep(step,-1) < 1 ? 0 : nextStep(step,-1));
+}
+
+function missing(q){
+  if (q.optional) return false;
+  const v = R[q.id];
+  if (q.type==="multi") return arr(v).length===0;
+  if (q.type==="number"){ const n = Number(v); return v===undefined || v==="" || !Number.isInteger(n) || n<q.min || n>q.max; }
+  if (q.type==="weeks"){ if (v==="nsp") return false; const n = Number(v); return !v || !Number.isInteger(n) || n<1 || n>openWeeks(R); }
+  if (q.type==="offweeks"){ if (v==="nsp") return false; const n = Number(v); return v===undefined || v==="" || !Number.isInteger(n) || n<0 || n>=openWeeks(R); }
+  return v===undefined || v==="";
+}
+
+function validateAndGo(){
+  const sid = SECTIONS[step-1].id;
+  const qs = secQs(sid);
+  const bad = qs.filter(missing);
+  document.querySelectorAll(".q").forEach(el=>{el.classList.remove("err"); el.querySelector(".q-err")?.remove();});
+  if (bad.length){
+    bad.forEach(q => { const el = document.getElementById("blk-"+q.id); el.classList.add("err");
+      const n = document.createElement("div"); n.className="q-err";
+      n.textContent = q.type==="offweeks" ? `Indiquez un nombre entier entre 0 et ${openWeeks(R)-1}, ou cochez « Je ne sais pas ».` : q.type==="number"||q.type==="weeks" ? `Indiquez un nombre entier${q.type==="weeks"?` entre 1 et ${openWeeks(R)}`:` entre ${q.min} et ${q.max}`}.` : "Merci de répondre à cette question.";
+      el.appendChild(n); });
+    document.getElementById("blk-"+bad[0].id).scrollIntoView({behavior:"smooth",block:"start"});
+    return;
+  }
+  const probe = applyAuto({...R});
+  const rules = RULES.filter(r=>r.s===sid && r.test(probe));
+  const blocks = rules.filter(r=>r.type==="block");
+  if (blocks.length){ renderSection(blocks); window.scrollTo({top:0,behavior:"smooth"}); return; }
+  const warns = rules.filter(r=>r.type==="warn");
+  if (warns.length && !ackWarn[sid]){
+    ackWarn[sid] = true;
+    renderSection(warns.map(w=>({...w, msg: w.msg + " Si votre réponse est exacte, cliquez à nouveau sur le bouton pour continuer."})));
+    window.scrollTo({top:0,behavior:"smooth"}); return;
+  }
+  warns.forEach(w=>alertes.add(w.id));
+  if (step===1 && R.q1==="non") return submit();
+  const n = nextStep(step,1);
+  if (n>7) return submit();
+  go(n);
+}
+
+function go(s){ step = s; if (s===0) renderIntro(); else renderSection(); window.scrollTo({top:0}); }
+
+function buildRow(){
+  const r = applyAuto(JSON.parse(JSON.stringify(R)));
+  const row = {version: SCHEMA_VERSION};
+  Q.forEach(q => { let v = visible(q,r) || ["q14","q14p","q24"].includes(q.id) && inScope(r) ? r[q.id] : "";
+    if (Array.isArray(v)) v = v.join("|");
+    row[q.id] = v ?? ""; });
+  const ww = inScope(r) ? workedWeeks(r) : null;
+  row.q20 = ww===null ? (inScope(r) && r.q20c==="nsp" ? "nsp" : "") : ww;
+  row.alertes = [...alertes].join("|");
+  row.duree_min = Math.round((Date.now()-t0)/60000);
+  return row;
+}
+
+
+const RESTITUTION = "Les réponses feront l'objet d'une étude de restitution globale. Elle sera adressée par newsletter à tous les adhérents de la FFPMI, mise à disposition sur le site de la fédération et relayée sur les réseaux sociaux.";
+const FBQ = [
+  {id:"fb1",type:"single",label:"Les questions correspondaient-elles à votre situation ?",opts:["Oui, tout à fait","En partie","Non"]},
+  {id:"fb2",type:"single",label:"Avez-vous pu répondre aux questions sur les montants (chiffre d'affaires, revenu) ?",opts:["Facilement","Avec difficulté","Non"]},
+  {id:"fb3",type:"textarea",label:"Certaines questions étaient-elles difficiles à comprendre ou à renseigner ? Lesquelles, et pourquoi ?"},
+  {id:"fb4",type:"textarea",label:"Manque-t-il une question ou une réponse importante pour votre situation ?"},
+  {id:"fb5",type:"single",label:"La durée du questionnaire vous a paru :",opts:["Trop longue","Correcte","Courte"]},
+  {id:"fb6",type:"textarea",label:"Autres remarques"}
+];
+const FB = {};
+function readable(row){
+  return Q.filter(q=>row[q.id]!==undefined && row[q.id]!=="").map(q=>{
+    const vals = String(row[q.id]).split("|").map(v=> ["number","weeks","offweeks","text","textarea"].includes(q.type) ? v : optLabel(q.id,v));
+    return `${q.id.toUpperCase()} : ${vals.join(", ")}`; }).join("\n");
+}
+function renderFeedback(row){
+  app.innerHTML = `<section class="end fb"><span class="accent"></span><h2>Merci d'avoir testé le questionnaire</h2>
+    <p>${RESTITUTION}</p>
+    <p>Vos réponses n'ont pas été enregistrées. Pour finir, quelques questions sur le questionnaire lui-même : vos remarques serviront à l'améliorer avant sa diffusion.</p>
+    <form id="fbf">${FBQ.map(q=>`<div class="q"><div class="q-label">${esc(q.label)}</div>${q.type==="single"
+      ? `<div class="q-opts">${q.opts.map(o=>`<label class="opt"><input type="radio" name="${q.id}" value="${esc(o)}"><span>${esc(o)}</span></label>`).join("")}</div>`
+      : `<textarea name="${q.id}" maxlength="1500"></textarea>`}</div>`).join("")}
+      <label class="consent"><input type="checkbox" id="joinAns" checked> <span>Joindre mes réponses au questionnaire à mon retour (pour vérifier que le parcours est cohérent)</span></label>
+      <button type="submit" class="btn-main">Préparer mon retour</button></form><div id="fbOut"></div></section>`;
+  const f = document.getElementById("fbf");
+  f.addEventListener("change", e => { if (e.target.type==="radio"){ f.querySelectorAll(`input[name=${e.target.name}]`).forEach(i=>i.closest(".opt").classList.toggle("on", i.checked)); } });
+  f.onsubmit = e => { e.preventDefault();
+    FBQ.forEach(q => { const el = f.elements[q.id]; FB[q.id] = el ? (el.value||"").trim() : ""; });
+    const avis = FBQ.map(q=>`${q.label}\n${FB[q.id]||"(pas de réponse)"}`).join("\n\n");
+    const text = `RETOUR DE TEST - Baromètre FFPMI 2025\n\n${avis}` + (document.getElementById("joinAns").checked ? `\n\n---\nRÉPONSES DONNÉES AU QUESTIONNAIRE\n${readable(row)}${row.alertes?`\nAvertissements affichés : ${row.alertes}`:""}\nDurée : ${row.duree_min} min` : "");
+    const mailBody = text.length < 1800 ? text : `RETOUR DE TEST - Baromètre FFPMI 2025\n\n${avis}`.slice(0,1700) + "\n\n(Collez ici le texte complet copié depuis la page.)";
+    const mail = `mailto:${CONFIG.EMAIL_RETOUR}?subject=${encodeURIComponent("Test du Baromètre FFPMI")}&body=${encodeURIComponent(mailBody)}`;
+    document.getElementById("fbOut").innerHTML = `<h2 style="margin-top:34px">Votre retour est prêt</h2>
+      <p>Copiez ce texte et envoyez-le à ${esc(CONFIG.EMAIL_RETOUR)}, ou utilisez le bouton email si votre appareil le permet.</p>
+      <textarea class="out" id="outTxt" readonly>${esc(text)}</textarea>
+      <div class="actions"><button class="btn-main" id="copy">Copier le texte</button><a class="btn-ghost" style="border-radius:999px;padding:13px 26px;font-weight:600;border:1.5px solid var(--trait)" href="${mail}" target="_blank" rel="noopener">Envoyer par email</a></div>
+      <p class="q-help" id="copyMsg" style="margin-top:10px"></p>`;
+    document.getElementById("copy").onclick = async () => { const ta = document.getElementById("outTxt"); let ok = false;
+      try { await navigator.clipboard.writeText(ta.value); ok = true; } catch(err){ ta.select(); try { ok = document.execCommand("copy"); } catch(e2){} }
+      document.getElementById("copyMsg").textContent = ok ? "Texte copié. Collez-le dans un email à " + CONFIG.EMAIL_RETOUR + "." : "Copie automatique impossible ici : sélectionnez le texte ci-dessus et copiez-le manuellement."; };
+    document.getElementById("fbOut").scrollIntoView({behavior:"smooth"}); };
+}
+
+async function submit(){
+  const row = buildRow();
+  app.innerHTML = `<section class="end"><h2>Envoi en cours...</h2></section>`;
+  if (CONFIG.MODE_TEST) return renderFeedback(row);
+  if (!CONFIG.SUPABASE_URL && !CONFIG.ENDPOINT){
+    app.innerHTML = `<section class="end"><span class="accent"></span><h2>Mode test : réponse non envoyée</h2>
+      <p>Aucune base de données n'est configurée (CONFIG.SUPABASE_URL et CONFIG.SUPABASE_KEY). Voici la ligne qui aurait été enregistrée :</p>
+      <pre class="test">${esc(JSON.stringify(row,null,1))}</pre></section>`;
+    return;
+  }
+  try {
+    if (CONFIG.SUPABASE_URL){
+      const payload = {}; Object.entries(row).forEach(([k,v]) => payload[k] = (v===undefined || v===null || v==="") ? null : String(v));
+      const key = CONFIG.SUPABASE_KEY;
+      const headers = {"Content-Type":"application/json", "apikey":key, "Prefer":"return=minimal"};
+      if (!key.startsWith("sb_publishable_")) headers.Authorization = "Bearer " + key;
+      const res = await fetch(CONFIG.SUPABASE_URL.replace(/\/$/,"") + "/rest/v1/barometre_reponses", {method:"POST", headers, body: JSON.stringify(payload)});
+      if (!res.ok) throw new Error("HTTP " + res.status);
+    } else {
+      await fetch(CONFIG.ENDPOINT, {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"}, body: JSON.stringify(row)});
+    }
+    try { localStorage.setItem("barometre_ffpmi_2025_envoye","1"); } catch(e){}
+    const outScope = R.q1==="non";
+    app.innerHTML = `<section class="end"><span class="accent"></span>
+      <h2>${outScope ? "Merci pour votre intérêt" : "Merci, vos réponses sont enregistrées"}</h2>
+      <p>${outScope ? "Cette enquête concerne les photographes ayant exercé une activité professionnelle indépendante en 2025. Votre réponse a bien été prise en compte." : "Votre participation contribue à faire connaître la réalité économique de notre profession."}</p>
+      <p>${RESTITUTION}</p>
+      <p>Vous pouvez partager ce questionnaire avec d'autres photographes, adhérents ou non : plus les réponses seront nombreuses, plus les résultats seront fiables.</p></section>`;
+  } catch(e){
+    app.innerHTML = `<section class="end"><h2>L'envoi n'a pas abouti</h2><p>Vérifiez votre connexion internet, puis réessayez. Vos réponses sont conservées tant que cette page reste ouverte.</p><button class="btn-main" id="retry">Réessayer l'envoi</button></section>`;
+    document.getElementById("retry").onclick = submit;
+  }
+}
+
+renderIntro();
+})();
+</script>
+</body>
+</html>
