@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Baromètre FFPMI 2025 - Revenus et conditions d'activité des photographes</title>
+<title>Baromètre FFPMI 2025 des artisans photographes - Revenus et conditions d'activité</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -38,6 +38,14 @@ textarea.out{min-height:220px;font-size:.85rem}
 .wordmark{font-weight:700;font-size:1.35rem;color:var(--encre);letter-spacing:.02em}
 .wordmark-sub{font-size:.8rem;color:var(--gris);font-weight:500;line-height:1.3}
 h1{font-weight:700;font-size:clamp(1.7rem,4.5vw,2.4rem);line-height:1.15;color:var(--encre);margin:0 0 8px}
+.kicker{font-weight:600;color:var(--brun);text-transform:uppercase;letter-spacing:.08em;font-size:.85rem;margin:0 0 8px}
+.audience{border-left:5px solid var(--brun);background:var(--voile);border-radius:0 12px 12px 0;padding:18px 20px;margin:22px 0 30px}
+.audience-title{font-weight:700;color:var(--encre);font-size:clamp(1.15rem,3.4vw,1.4rem);line-height:1.3;margin:0 0 8px}
+.audience p:last-child{margin:0}
+.intro-h2{font-size:1.2rem;margin:0 0 12px}
+.notfor{border:1.5px solid var(--trait);border-radius:12px;padding:16px 18px;margin:18px 0 24px}
+.notfor-title{font-weight:600;color:var(--encre);margin:0 0 6px}
+.notfor ul{margin:0;padding-left:20px}.notfor li{margin:4px 0}
 .h1-sub{font-weight:500;color:var(--gris);font-size:1.1rem;margin:0 0 28px}
 h2{font-weight:700;font-size:1.5rem;line-height:1.25;color:var(--encre);margin:0 0 28px}
 p{margin:0 0 14px}
@@ -98,7 +106,7 @@ footer.bottom{margin-top:56px;font-size:.8rem;color:var(--gris)}
 <div class="page">
   <header class="top" id="brand"></header>
   <main id="app" aria-live="polite"></main>
-  <footer class="bottom">Fédération Française de la Photographie et des Métiers de l'Image</footer>
+  <footer class="bottom">Baromètre des artisans photographes - Fédération Française de la Photographie et des Métiers de l'Image</footer>
 </div>
 
 <script>
@@ -156,8 +164,8 @@ function bandLabel(B,k){
 
 /* Prédicats de parcours */
 const inScopeBase = r => r.q1==="oui_toujours" || r.q1==="oui_cesse";
-/* Hors champ : activité commerciale sans immatriculation artisanale, ou artiste-auteur exclusivement */
-const excluded = r => r.q8==="commercial" || r.q10==="exclusif";
+/* Hors champ : activité non immatriculée comme artisanale (commerciale, libérale, ne sait pas), ou artiste-auteur exclusivement */
+const excluded = r => (!!r.q8 && r.q8!=="artisanal") || r.q10==="exclusif";
 const inScope = r => inScopeBase(r) && !excluded(r);
 const n26 = r => r.q1==="non_2026";
 const anyPath = r => inScopeBase(r) || n26(r);          // questions de profil (partie 1)
@@ -194,9 +202,9 @@ const Q = [
  {id:"q7",s:"s2",type:"single",when:inScopeBase,label:"Sous quelle forme exerciez-vous principalement en 2025 ?",help:"Si vous aviez plusieurs structures, répondez pour celle qui portait la plus grande part de votre activité photographique. Les questions sur l'entreprise concerneront cette structure.",
   opts:[["ei","Entreprise individuelle, micro-entreprise comprise."],["eurl","EURL."],["sarl","SARL."],["sasu","SASU."],["sas","SAS."],["autre","Autre forme."],["nsp","Je ne sais pas."]]},
  {id:"q7a",s:"s2",type:"text",when:r=>inScopeBase(r)&&r.q7==="autre",label:"Précisez la forme juridique :"},
- {id:"q8",s:"s2",type:"single",when:inScopeBase,label:"Comment l'activité photographique de cette structure était-elle immatriculée en 2025 ?",
+ {id:"q8",s:"s2",type:"single",when:inScopeBase,label:"Comment l'activité photographique de cette structure était-elle immatriculée en 2025 ?",help:"Votre activité est artisanale si votre entreprise est inscrite auprès de la Chambre de métiers et de l'artisanat (CMA). Cette mention figure sur votre extrait d'immatriculation ; en cas de doute, votre CMA peut vous le confirmer.",
   opts:[["artisanal","Comme activité artisanale (Registre national des entreprises, ex-Répertoire des métiers, rattachement à la Chambre de métiers et de l'artisanat)."],["commercial","Comme activité commerciale, sans immatriculation artisanale."],["liberal","Comme activité libérale."],["nsp","Je ne sais pas."]]},
- {id:"q10",s:"s2",type:"single",when:r=>inScopeBase(r)&&r.q8!=="commercial",label:"Exerciez-vous également une activité sous le régime des artistes-auteurs ?",opts:[["non","Non."],["parallele","Oui, en parallèle de mon activité artisanale."],["exclusif","Oui, exclusivement."],["nsp","Je ne sais pas."]]},
+ {id:"q10",s:"s2",type:"single",when:r=>inScopeBase(r)&&(!r.q8||r.q8==="artisanal"),label:"Exerciez-vous également une activité sous le régime des artistes-auteurs ?",opts:[["non","Non."],["parallele","Oui, en parallèle de mon activité artisanale."],["exclusif","Oui, exclusivement."],["nsp","Je ne sais pas."]]},
  {id:"q9",s:"s2",type:"single",when:inScope,label:"Quel était le régime fiscal de cette structure en 2025 ?",help:"Ces informations figurent sur votre déclaration de revenus ou votre espace URSSAF.",
   opts:[["micro_bic","Micro-entreprise, bénéfices industriels et commerciaux (micro-BIC)."],["micro_bnc","Micro-entreprise, bénéfices non commerciaux (micro-BNC)."],["reel_bic","Régime réel à l'impôt sur le revenu, en BIC."],["reel_bnc","Régime réel à l'impôt sur le revenu, en BNC."],["is","Impôt sur les sociétés."],["autre","Autre."],["nsp","Je ne sais pas."]]},
  {id:"q9c",s:"s2",type:"single",when:inScope,label:"Avez-vous changé de régime fiscal au cours de l'année 2025 ?",opts:[["non","Non."],["oui","Oui."]]},
@@ -323,7 +331,7 @@ const todo = v => v ? esc(v) : `<span class="todo">[à compléter]</span>`;
 function notice(){
   return `<details class="notice"><summary>Notice d'information sur vos données</summary>
   <p><b>Responsable du traitement.</b> Fédération Française de la Photographie et des Métiers de l'Image (FFPMI), SIREN 319 403 697, ${todo(CONFIG.ADRESSE_SIEGE)}, représentée par sa présidente. Contact : ${todo(CONFIG.CONTACT_RGPD)}.</p>
-  <p><b>Finalité.</b> Les réponses servent uniquement à produire le Baromètre FFPMI des revenus et conditions d'activité des photographes, publié sous forme de statistiques regroupées. Elles ne sont utilisées ni à des fins commerciales, ni pour vous contacter, ni pour vérifier votre situation individuelle.</p>
+  <p><b>Finalité.</b> Les réponses servent uniquement à produire le Baromètre FFPMI des revenus et conditions d'activité des artisans photographes, publié sous forme de statistiques regroupées. Elles ne sont utilisées ni à des fins commerciales, ni pour vous contacter, ni pour vérifier votre situation individuelle.</p>
   <p><b>Base légale.</b> Votre consentement. La participation est facultative et vous pouvez interrompre le questionnaire à tout moment.</p>
   <p><b>Données collectées.</b> Uniquement vos réponses. Aucun nom, adresse email ou numéro SIRET n'est demandé, et la FFPMI n'enregistre pas votre adresse IP. Les hébergeurs techniques peuvent conserver temporairement des journaux de connexion, pour la sécurité de leurs services.</p>
   <p><b>Anonymat et publication.</b> Aucun résultat n'est publié pour un groupe de moins de 10 répondants. Les croisements qui pourraient permettre de reconnaître une personne ne sont pas publiés.</p>
@@ -337,11 +345,22 @@ function renderIntro(){
   let already = false; try { already = localStorage.getItem("barometre_ffpmi_2025_envoye")==="1"; } catch(e){}
   app.innerHTML = `<section class="intro">
     ${CONFIG.MODE_TEST ? `<div class="testband"><b>Version de test.</b> Vos réponses ne sont pas enregistrées. À la fin, quelques questions vous permettront de donner votre avis sur le questionnaire.</div>` : ""}
-    <h1>Baromètre FFPMI 2025</h1>
-    <p class="h1-sub">Revenus et conditions d'activité des photographes artisans</p>
-    <p>Cette enquête vise à mieux connaître la réalité économique de notre profession : activité, temps de travail, chiffre d'affaires et revenu personnel.</p>
+    <p class="kicker">Baromètre FFPMI 2025</p>
+    <h1>Revenus des artisans photographes</h1>
+    <div class="audience">
+      <p class="audience-title">Cette enquête s'adresse uniquement aux artisans photographes.</p>
+      <p>Elle ne concerne pas l'ensemble des photographes professionnels. Son but est de mesurer la réalité économique propre aux artisans photographes : activité, temps de travail, chiffre d'affaires et revenu personnel.</p>
+    </div>
+    <h2 class="intro-h2">Qu'est-ce qu'un artisan photographe ?</h2>
+    <p>C'est un photographe dont l'entreprise est <b>immatriculée au titre d'une activité artisanale</b>, c'est-à-dire inscrite auprès de la <b>Chambre de métiers et de l'artisanat (CMA)</b>, quel que soit son statut : micro-entreprise, entreprise individuelle ou société. La photographie de prestation (portrait, mariage, naissance, studio, entreprise...) fait partie des métiers de l'artisanat.</p>
+    <p>Les statistiques disponibles mélangent souvent des situations très différentes. Ce baromètre veut donner une image fidèle des artisans photographes, pour défendre le métier auprès des pouvoirs publics.</p>
+    <div class="notfor"><p class="notfor-title">Cette enquête ne vous concerne pas si :</p>
+      <ul><li>votre activité est immatriculée comme activité commerciale ou libérale, sans inscription à la CMA ;</li>
+      <li>vous exercez uniquement sous le régime des artistes-auteurs ;</li>
+      <li>vous êtes photographe salarié.</li></ul>
+      <p class="q-help" style="margin:8px 0 0">En cas de doute, votre extrait d'immatriculation indique si votre activité est artisanale ; votre CMA peut aussi vous le confirmer.</p></div>
     <p>Les questions portent sur l'année 2025, sauf indication contraire. Les montants sont demandés par tranches. Merci de répondre pour votre situation personnelle ; lorsque la question concerne l'entreprise, cela est précisé.</p>
-    <p>Elle est ouverte à tous les photographes professionnels indépendants, adhérents ou non de la FFPMI. Plus vous serez nombreux et divers à répondre, plus les résultats seront fidèles à la réalité du métier : n'hésitez pas à la partager autour de vous.</p>
+    <p>Artisans photographes, adhérents ou non de la FFPMI : plus vous serez nombreux à répondre, plus les résultats seront fidèles à la réalité du métier. N'hésitez pas à partager l'enquête avec d'autres artisans photographes.</p>
     <div class="facts"><span><b>12 à 15 minutes</b></span><span><b>Anonyme</b></span><span>Aucun résultat publié sous <b>10 répondants</b></span></div>
     ${already ? `<div class="msg warn">Une réponse a déjà été envoyée depuis cet appareil. Merci de ne répondre qu'une seule fois par personne.</div>` : ""}
     ${notice()}
@@ -525,7 +544,7 @@ function readable(row){
 }
 function renderFeedback(row){
   app.innerHTML = `<section class="end fb"><span class="accent"></span><h2>Merci d'avoir testé le questionnaire</h2>
-    ${excluded(R) ? `<div class="msg warn">Fin du parcours : avec une activité commerciale ou une activité exclusivement d'artiste-auteur, le répondant est hors du champ de l'enquête. Dans la version réelle, le questionnaire s'arrête ici.</div>` : ""}
+    ${excluded(R) ? `<div class="msg warn">Fin du parcours : avec une activité non immatriculée comme artisanale (commerciale, libérale ou inconnue) ou une activité exclusivement d'artiste-auteur, le répondant est hors du champ de l'enquête. Dans la version réelle, le questionnaire s'arrête ici.</div>` : ""}
     <p>${RESTITUTION}</p>
     <p>Vos réponses n'ont pas été enregistrées. Pour finir, quelques questions sur le questionnaire lui-même : vos remarques serviront à l'améliorer avant sa diffusion.</p>
     <form id="fbf">${FBQ.map(q=>`<div class="q"><div class="q-label">${esc(q.label)}</div>${q.type==="single"
@@ -579,7 +598,7 @@ async function submit(){
       <h2>${outScope ? "Merci pour votre intérêt" : "Merci, vos réponses sont enregistrées"}</h2>
       <p>${excluded(R) ? "Cette enquête porte sur les photographes exerçant une activité artisanale. Votre situation n'entre pas dans son champ, mais votre réponse a bien été prise en compte et nous vous remercions de votre participation." : outScope ? "Cette enquête concerne les photographes ayant exercé une activité professionnelle indépendante en 2025. Votre réponse a bien été prise en compte." : "Votre participation contribue à faire connaître la réalité économique de notre profession."}</p>
       <p>${RESTITUTION}</p>
-      <p>Vous pouvez partager ce questionnaire avec d'autres photographes, adhérents ou non : plus les réponses seront nombreuses, plus les résultats seront fiables.</p></section>`;
+      <p>Vous pouvez partager ce questionnaire avec d'autres artisans photographes, adhérents ou non : plus les réponses seront nombreuses, plus les résultats seront fiables.</p></section>`;
   } catch(e){
     app.innerHTML = `<section class="end"><h2>L'envoi n'a pas abouti</h2><p>Vérifiez votre connexion internet, puis réessayez. Vos réponses sont conservées tant que cette page reste ouverte.</p><button class="btn-main" id="retry">Réessayer l'envoi</button></section>`;
     document.getElementById("retry").onclick = submit;
