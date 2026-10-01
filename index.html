@@ -46,6 +46,33 @@ h1{font-weight:700;font-size:clamp(1.7rem,4.5vw,2.4rem);line-height:1.15;color:v
 .notfor{border:1.5px solid var(--trait);border-radius:12px;padding:16px 18px;margin:18px 0 24px}
 .notfor-title{font-weight:600;color:var(--encre);margin:0 0 6px}
 .notfor ul{margin:0;padding-left:20px}.notfor li{margin:4px 0}
+.hero{padding:6px 0 4px}
+.lead{font-size:1.12rem;font-weight:500;color:var(--texte);margin:0 0 18px;max-width:40ch}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 26px}
+.chip{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:999px;background:var(--voile);color:var(--encre);font-weight:600;font-size:.85rem}
+.chip svg{width:17px;height:17px;color:var(--gris)}
+.who{border:1.5px solid var(--trait);border-top:5px solid var(--brun);border-radius:14px;padding:20px 20px 6px;margin:0 0 20px}
+.who-title{font-weight:700;color:var(--encre);font-size:clamp(1.1rem,3.3vw,1.3rem);line-height:1.3;margin:0 0 16px}
+.who-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 6px}
+.who-col{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:10px;background:var(--voile);font-size:.9rem;line-height:1.45}
+.who-col b{display:block;color:var(--encre);font-size:.95rem;margin-bottom:3px}
+.who-col .ico{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:#fff}
+.who-col .ico svg{width:16px;height:16px}
+.who-col.yes .ico{background:var(--brun)}
+.who-col.no .ico{background:var(--gris)}
+details.more{border-top:1px solid var(--trait);margin-top:14px;padding:12px 0}
+details.more summary{cursor:pointer;font-weight:600;color:var(--encre);font-size:.93rem;list-style:none;display:flex;justify-content:space-between;align-items:center}
+details.more summary::-webkit-details-marker{display:none}
+details.more summary::after{content:"+";font-size:1.3rem;color:var(--brun);font-weight:500;transition:transform .2s}
+details.more[open] summary::after{transform:rotate(45deg)}
+details.more p{font-size:.9rem;margin:10px 0 0}
+.small{font-size:.88rem;color:var(--gris);margin:0 0 22px}
+.anim{opacity:0;transform:translateY(10px);animation:fadeUp .5s ease forwards}
+.hero .anim:nth-child(2){animation-delay:.06s}.hero .anim:nth-child(3){animation-delay:.12s}.hero .anim:nth-child(4){animation-delay:.18s}
+.who.anim{animation-delay:.26s}.small.anim{animation-delay:.34s}
+@keyframes fadeUp{to{opacity:1;transform:none}}
+@media (max-width:560px){.who-grid{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.anim{animation:none;opacity:1;transform:none}}
 .h1-sub{font-weight:500;color:var(--gris);font-size:1.1rem;margin:0 0 28px}
 h2{font-weight:700;font-size:1.5rem;line-height:1.25;color:var(--encre);margin:0 0 28px}
 p{margin:0 0 14px}
@@ -345,23 +372,24 @@ function renderIntro(){
   let already = false; try { already = localStorage.getItem("barometre_ffpmi_2025_envoye")==="1"; } catch(e){}
   app.innerHTML = `<section class="intro">
     ${CONFIG.MODE_TEST ? `<div class="testband"><b>Version de test.</b> Vos réponses ne sont pas enregistrées. À la fin, quelques questions vous permettront de donner votre avis sur le questionnaire.</div>` : ""}
-    <p class="kicker">Baromètre FFPMI 2025</p>
-    <h1>Revenus des artisans photographes</h1>
-    <div class="audience">
-      <p class="audience-title">Cette enquête s'adresse uniquement aux artisans photographes.</p>
-      <p>Elle ne concerne pas l'ensemble des photographes professionnels. Son but est de mesurer la réalité économique propre aux artisans photographes : activité, temps de travail, chiffre d'affaires et revenu personnel.</p>
+    <div class="hero">
+      <p class="kicker anim">Baromètre FFPMI 2025</p>
+      <h1 class="anim">Revenus des artisans photographes</h1>
+      <p class="lead anim">Mesurer la réalité économique du métier, pour mieux le défendre.</p>
+      <div class="chips anim"><span class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>12 à 15 min</span><span class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8.5 10.5V8a3.5 3.5 0 017 0v2.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>Anonyme</span><span class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V11M12 19V5M19 19v-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Résultats partagés</span></div>
     </div>
-    <h2 class="intro-h2">Qu'est-ce qu'un artisan photographe ?</h2>
-    <p>C'est un photographe dont l'entreprise est <b>immatriculée au titre d'une activité artisanale</b>, c'est-à-dire inscrite auprès de la <b>Chambre de métiers et de l'artisanat (CMA)</b>, quel que soit son statut : micro-entreprise, entreprise individuelle ou société. La photographie de prestation (portrait, mariage, naissance, studio, entreprise...) fait partie des métiers de l'artisanat.</p>
-    <p>Les statistiques disponibles mélangent souvent des situations très différentes. Ce baromètre veut donner une image fidèle des artisans photographes, pour défendre le métier auprès des pouvoirs publics.</p>
-    <div class="notfor"><p class="notfor-title">Cette enquête ne vous concerne pas si :</p>
-      <ul><li>votre activité est immatriculée comme activité commerciale ou libérale, sans inscription à la CMA ;</li>
-      <li>vous exercez uniquement sous le régime des artistes-auteurs ;</li>
-      <li>vous êtes photographe salarié.</li></ul>
-      <p class="q-help" style="margin:8px 0 0">En cas de doute, votre extrait d'immatriculation indique si votre activité est artisanale ; votre CMA peut aussi vous le confirmer.</p></div>
-    <p>Les questions portent sur l'année 2025, sauf indication contraire. Les montants sont demandés par tranches. Merci de répondre pour votre situation personnelle ; lorsque la question concerne l'entreprise, cela est précisé.</p>
-    <p>Artisans photographes, adhérents ou non de la FFPMI : plus vous serez nombreux à répondre, plus les résultats seront fidèles à la réalité du métier. N'hésitez pas à partager l'enquête avec d'autres artisans photographes.</p>
-    <div class="facts"><span><b>12 à 15 minutes</b></span><span><b>Anonyme</b></span><span>Aucun résultat publié sous <b>10 répondants</b></span></div>
+    <div class="who anim">
+      <p class="who-title">Cette enquête s'adresse uniquement aux artisans photographes</p>
+      <div class="who-grid">
+        <div class="who-col yes"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><b>Vous êtes concerné</b><span>Votre entreprise est inscrite à la Chambre de métiers et de l'artisanat (CMA) : micro-entreprise, entreprise individuelle ou société.</span></div></div>
+        <div class="who-col no"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></span><div><b>Vous n'êtes pas concerné</b><span>Activité commerciale ou libérale sans inscription à la CMA, artiste-auteur uniquement, photographe salarié.</span></div></div>
+      </div>
+      <details class="more"><summary>Qu'est-ce qu'un artisan photographe ?</summary>
+        <p>C'est un photographe dont l'entreprise est immatriculée au titre d'une activité artisanale, quel que soit son statut. La photographie de prestation (portrait, mariage, naissance, studio, entreprise...) fait partie des métiers de l'artisanat. Les statistiques disponibles mélangent souvent des situations très différentes : ce baromètre veut donner une image fidèle des artisans photographes.</p>
+        <p>En cas de doute, votre extrait d'immatriculation indique si votre activité est artisanale ; votre CMA peut aussi vous le confirmer.</p>
+      </details>
+    </div>
+    <p class="small anim">Questions sur l'année 2025, montants par tranches. Répondez pour votre situation personnelle.</p>
     ${already ? `<div class="msg warn">Une réponse a déjà été envoyée depuis cet appareil. Merci de ne répondre qu'une seule fois par personne.</div>` : ""}
     ${notice()}
     <label class="consent"><input type="checkbox" id="consent"> <span>J'ai pris connaissance de la notice d'information et j'accepte que mes réponses soient utilisées dans les conditions décrites.</span></label>
