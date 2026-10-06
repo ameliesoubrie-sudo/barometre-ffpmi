@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Baromètre FFPMI 2025 des artisans photographes - Revenus et conditions d'activité</title>
+<title>Baromètre FFPMI des artisans photographes - Revenus et conditions d'activité</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -373,7 +373,7 @@ function renderIntro(){
   app.innerHTML = `<section class="intro">
     ${CONFIG.MODE_TEST ? `<div class="testband"><b>Version de test.</b> Vos réponses ne sont pas enregistrées. À la fin, quelques questions vous permettront de donner votre avis sur le questionnaire.</div>` : ""}
     <div class="hero">
-      <p class="kicker anim">Baromètre FFPMI 2025</p>
+      <p class="kicker anim">Baromètre FFPMI</p>
       <h1 class="anim">Revenus des artisans photographes</h1>
       <p class="lead anim">Mesurer la réalité économique du métier, pour mieux le défendre.</p>
       <div class="chips anim"><span class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>12 à 15 min</span><span class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8.5 10.5V8a3.5 3.5 0 017 0v2.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>Anonyme</span><span class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V11M12 19V5M19 19v-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Résultats partagés</span></div>
@@ -585,8 +585,8 @@ function renderFeedback(row){
   f.onsubmit = e => { e.preventDefault();
     FBQ.forEach(q => { const el = f.elements[q.id]; FB[q.id] = el ? (el.value||"").trim() : ""; });
     const avis = FBQ.map(q=>`${q.label}\n${FB[q.id]||"(pas de réponse)"}`).join("\n\n");
-    const text = `RETOUR DE TEST - Baromètre FFPMI 2025\n\n${avis}` + (document.getElementById("joinAns").checked ? `\n\n---\nRÉPONSES DONNÉES AU QUESTIONNAIRE\n${readable(row)}${row.alertes?`\nAvertissements affichés : ${row.alertes}`:""}\nDurée : ${row.duree_min} min` : "");
-    const mailBody = text.length < 1800 ? text : `RETOUR DE TEST - Baromètre FFPMI 2025\n\n${avis}`.slice(0,1700) + "\n\n(Collez ici le texte complet copié depuis la page.)";
+    const text = `RETOUR DE TEST - Baromètre FFPMI\n\n${avis}` + (document.getElementById("joinAns").checked ? `\n\n---\nRÉPONSES DONNÉES AU QUESTIONNAIRE\n${readable(row)}${row.alertes?`\nAvertissements affichés : ${row.alertes}`:""}\nDurée : ${row.duree_min} min` : "");
+    const mailBody = text.length < 1800 ? text : `RETOUR DE TEST - Baromètre FFPMI\n\n${avis}`.slice(0,1700) + "\n\n(Collez ici le texte complet copié depuis la page.)";
     const mail = `mailto:${CONFIG.EMAIL_RETOUR}?subject=${encodeURIComponent("Test du Baromètre FFPMI")}&body=${encodeURIComponent(mailBody)}`;
     document.getElementById("fbOut").innerHTML = `<h2 style="margin-top:34px">Votre retour est prêt</h2>
       <p>Copiez ce texte et envoyez-le à ${esc(CONFIG.EMAIL_RETOUR)}, ou utilisez le bouton email si votre appareil le permet.</p>
